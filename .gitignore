@@ -1,0 +1,9 @@
+*.pyc
+*.idea
+/Scripts/
+/Lib/
+/test/
+/pyvenv.cfg
+/share/
+/Include/
+/Test/

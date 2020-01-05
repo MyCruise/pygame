@@ -1,22 +1,29 @@
 import pygame
 from pygame.locals import *
-from tetris.Src.Character.actor import Actor
+from JoyGame.Src.Character.actor import Actor
 
 
 class Game:
     def __init__(self):
         pygame.init()
+        # init screen
         self.screen_height = 1280
         self.screen_width = 720
         self.screen = pygame.display.set_mode((self.screen_height, self.screen_width))
 
+        # init character
         self.player1 = Actor((40, 40), (400, 400), (255, 255, 255), 1, "player", 40, direction="up")
 
+        # init event
         self.MOVE = pygame.USEREVENT + 1
         pygame.time.set_timer(self.MOVE, 250)
 
-        self.background = pygame.Surface((self.screen_height, self.screen_width))
+        # init background
+        self.background = pygame.Surface(self.screen.get_size())
+        self.background = self.background.convert()
         self.background.fill((0, 0, 0))
+
+        # init variable
         self.running = True
 
     def process_event(self):
