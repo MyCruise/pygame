@@ -12,7 +12,7 @@ class Controller:
         self.button_list = []
         self.hat_list = []
         self.running = True
-        self.pressed = pygame.key.get_pressed()
+        self.keyword = pygame.key.get_pressed()
         self.btn = pygame.mouse.get_pressed()
         self.controller = 0
         self.last_controller = 0
@@ -20,13 +20,19 @@ class Controller:
     def input(self):
         for event in pygame.event.get():
             if event.type == KEYDOWN:
-                self.pressed = pygame.key.get_pressed()
+                self.keyword = pygame.key.get_pressed()
             if event.type == MOUSEMOTION:
-                print(pygame.mouse.get_pos())
+                print(*pygame.mouse.get_pos())
             self.btn = pygame.mouse.get_pressed()
 
             if event.type == pygame.QUIT:
                 print("exit")
+
+    def iskeyword(self, key):
+        return self.keyword == key
+
+    def isjoystick(self):
+        return
 
     def joystick(self):
         joystick_count = pygame.joystick.get_count()
@@ -51,33 +57,32 @@ class Controller:
                 hat = joystick.get_hat(i)
                 self.hat_list.append(hat)
 
-    def controller_status(self):
+    def controller_detect(self):
+        if os.path.exists("/dev/input/js0"):
+            self.controller = 1
+        else:
+            self.controller = 0
 
-        while True:
-            if os.path.exists("/dev/input/js0"):
-                self.controller = 1
-            else:
-                self.controller = 0
-
-            if self.controller != self.last_controller:
+        if self.controller != self.last_controller:
+            if self.controller == 1:
                 print("controller connected")
             else:
                 print("controller disconnected")
-
-            self.last_controller = self.controller
+        else:
+            pass
+        self.last_controller = self.controller
+        return self.controller
 
 
 if __name__ == '__main__':
     control = Controller()
     while control.running:
-        control.joystick()
-        control.input()
-        # for axis in control.axis_list:
-        #     if axis is not -1:
-        #         print(axis)
-        # for button in control.button_list:
-        #     if button is not 0:
-        #         print(button)
-        # for hat in control.hat_list:
-        #     if hat is not (0, 0):
-        #         print(hat)
+        if control.controller_detect():
+            control.joystick()
+            control.input()
+            for axis in control.axis_list:
+                print(axis)
+            for button in control.button_list:
+                print(button)
+            for hat in control.hat_list:
+                print(hat)
