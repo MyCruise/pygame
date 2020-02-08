@@ -16,6 +16,7 @@ class Controller:
         self.btn = pygame.mouse.get_pressed()
         self.controller = 0
         self.last_controller = 0
+        self.surf = []
 
     def input(self):
         for event in pygame.event.get():

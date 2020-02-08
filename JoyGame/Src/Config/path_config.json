@@ -1,0 +1,7 @@
+{
+    "Effect-action": "../../../JoyGame/Src/Assets/Effect/action",
+    "Effect-sounds": "../../../JoyGame/Src/Assets/Effect/sounds",
+    "Image-icon": "../../../JoyGame/Src/Assets/Image/icon",
+    "Materials": "../../../JoyGame/Src/Assets/Materials",
+    "Music": "../../../JoyGame/Src/Assets/Music"
+}

@@ -1,6 +1,7 @@
 import os
 
 import pygame
+from math import pi
 from JoyGame.Src.Include.vector import Vector2
 from JoyGame.Src.System.physics import Physics
 
@@ -20,6 +21,7 @@ class Character:
         self.gravity = self.physics.gravity
         self.acceleration = self.physics.acceleration
         self.label = label
+        self.angle = 0
         if image != "":
             self.image = pygame.image.load(image).convert()
 
@@ -57,3 +59,8 @@ class Character:
     def mv_fall(self):
         self.position.y += self.physics.count_distance(self.speed.y)
         self.speed = self.physics.updateSpeed()
+
+    def mv_angle(self, angle):
+        self.angle = angle
+        print(self.angle)
+        self.surf = pygame.transform.rotate(self.surf, self.angle / 360 * pi)
