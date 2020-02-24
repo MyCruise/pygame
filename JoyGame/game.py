@@ -3,9 +3,11 @@ import sys
 import pygame
 from pygame.locals import *
 from sys import exit
+
 from JoyGame.Src.Include.glovar import GLOVAR
 from JoyGame.Src.System.event import next_event
 from JoyGame.Src.System.screen import Screen
+from JoyGame.Src.System.physics import Physics
 from JoyGame.Src.Character.actor import Character
 from JoyGame.Src.System.shape import Shape
 from JoyGame.Src.System.text import Text
@@ -23,13 +25,15 @@ class Game:
         pygame.init()
         pygame.display.set_caption("Dungeon Adventure")
         self.control = Controller()
+        self.glovar = GLOVAR()
+        self.clock = pygame.time.Clock()
 
         # init class
         self.color = Color()
         self.screen = Screen(self.color.White)
         self.shape = Shape(self.screen.screen)
         self.text = Text(self.screen.screen)
-        self.menu = Menu(self.screen, self.text)
+        self.menu = Menu(self.screen, self.text, self.clock)
         self.button = Button(self.screen.screen, self.text)
 
         # display information
@@ -45,6 +49,7 @@ class Game:
         pygame.time.set_timer(self.MAINLOOP, 1)
 
         # init variable
+        self.fps = 0
         self.running = True
 
     def process_event(self):
@@ -65,6 +70,10 @@ class Game:
                 print("Joystick button released.")
 
     def update(self):
+        self.clock.tick(self.glovar.targetFPS)
+        ticks = pygame.time.get_ticks()
+
+    def display(self):
         self.screen.screen.blit(self.screen.background, (0, 0))
         self.menu.__start__()
         self.menu.__test__()
@@ -74,6 +83,7 @@ class Game:
     def games(self):
         while self.running:
             self.control.joystick()
+            self.display()
             self.update()
 
     def run(self):

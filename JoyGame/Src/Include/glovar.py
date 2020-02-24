@@ -10,9 +10,9 @@ class GLOVAR:
         ignore_name = ['.gitignore', '.DS_Store']
         ignore_suffix = []
 
-        init_config = self.s2c.readFromConfig("init")
+        init_config = self.s2c.readFromConfig("init", display="True")
         self.import_init = 0
-        path_config = self.s2c.readFromConfig("path")
+        path_config = self.s2c.readFromConfig("path", display="True")
         self.import_init = 0
 
         # initiate config

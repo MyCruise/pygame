@@ -11,13 +11,13 @@ class SAVE2CONFIG:
 
     def save2config(self, config_name, dict, display="False"):
         sorted(dict.keys())
-        config_wt(self.path + config_name + "_config", dict)
+        config_wt(self.path + config_name + "_config", dict, display)
         config_dict = config_rd(self.path + config_name + "_config")
         if not display:
             print(config_dict)
 
     def readFromConfig(self, config_name, display="False"):
-        config_dict = config_rd(self.path + config_name + "_config")
+        config_dict = config_rd(self.path + config_name + "_config", display)
         if not display:
             print(config_dict)
         return config_dict

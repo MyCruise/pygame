@@ -6,7 +6,7 @@ from JoyGame.Src.System.screen import Screen
 
 
 class Physics:
-    def __init__(self, screen, speed, mass, acceleration):
+    def __init__(self, screen, speed, mass, acceleration, clock):
         # init variable
         self.glovar = GLOVAR()
         self.screen = screen
@@ -18,7 +18,7 @@ class Physics:
         self.acceleration = acceleration
 
         # init timer
-        self.clock = pygame.time.Clock()
+        self.clock = clock
 
     def setbody(self):
         pass
