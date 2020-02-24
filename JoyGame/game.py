@@ -1,47 +1,48 @@
+import os
+import sys
 import pygame
 from pygame.locals import *
 from sys import exit
-from JoyGame.Src.Character.actor import Character
-from JoyGame.Src.Include.vector import Vector2
-from JoyGame.Src.System.shape import Shape
+from JoyGame.Src.Include.glovar import GLOVAR
+from JoyGame.Src.System.event import next_event
 from JoyGame.Src.System.screen import Screen
-# from JoyGame.Src.UI.UI import
+from JoyGame.Src.Character.actor import Character
+from JoyGame.Src.System.shape import Shape
+from JoyGame.Src.System.text import Text
+# from JoyGame.Src.UI.UI import UI
+from JoyGame.Src.UI.menu import Menu
+from JoyGame.Src.System.shape import Button
 from JoyGame.Src.Script.initCharacter import initCharacter
-from JoyGame.Src.Include.color import *
-
-
-def nextEvent(event):
-    return event + 1
+from JoyGame.Src.UI.map import Map
+from JoyGame.Src.Include.color import Color
+from JoyGame.Src.Controller.controller import Controller
 
 
 class Game:
     def __init__(self):
         pygame.init()
-        pygame.display.set_caption("Fatigue")
+        pygame.display.set_caption("Dungeon Adventure")
+        self.control = Controller()
 
-        # init screen
-        self.Screen = Screen()
-        print(self.Screen.halfSize())
+        # init class
+        self.color = Color()
+        self.screen = Screen(self.color.White)
+        self.shape = Shape(self.screen.screen)
+        self.text = Text(self.screen.screen)
+        self.menu = Menu(self.screen, self.text)
+        self.button = Button(self.screen.screen, self.text)
 
-        # init shape
-        self.Shape = Shape(self.Screen.screen)
+        # display information
+        print("platform: \t\t" + sys.platform)
+        print("revolution: \t" + str(self.screen.halfSize()))
 
         # init character
         character = initCharacter()
-        self.player1 = Character((40, 40), (60, 0), White, 1, "player", Vector2(0, 0), 10, Vector2(0, 0), image="")
 
         # init event
-        self.MAINLOOP = nextEvent(pygame.USEREVENT)
-        self.MOVE = nextEvent(self.MAINLOOP)
-        self.GRAVITY = nextEvent(self.MOVE)
+        self.MAINLOOP = next_event(pygame.USEREVENT)
 
         pygame.time.set_timer(self.MAINLOOP, 1)
-        pygame.time.set_timer(self.GRAVITY, 1)
-
-        # init background
-        self.background = pygame.Surface(self.Screen.screen.get_size())
-        self.background = self.background.convert()
-        self.background.fill(Black)
 
         # init variable
         self.running = True
@@ -52,24 +53,27 @@ class Game:
                 if event.key == K_ESCAPE:
                     self.running = False
                 return event.key
-            elif event.type == QUIT:
+            if event.type == MOUSEMOTION:
+                print(*pygame.mouse.get_pos())
+            if event.type == QUIT:
                 exit()
-            elif event.type == self.GRAVITY:
-                self.player1.mv_fall()
-            elif event.type == self.MAINLOOP:
+            if event.type == self.MAINLOOP:
                 pass
+            if event.type == pygame.JOYBUTTONDOWN:
+                print("Joystick button pressed.")
+            elif event.type == pygame.JOYBUTTONUP:
+                print("Joystick button released.")
 
     def update(self):
-        # print(self.player1.position.x, self.player1.position.y)
-        self.Screen.screen.blit(self.background, (0, 0))
-        self.Screen.screen.blit(self.player1.surf, (self.player1.position.x, self.player1.position.y))
-
-        pressed_key = self.process_event()
+        self.screen.screen.blit(self.screen.background, (0, 0))
+        self.menu.__start__()
+        self.menu.__test__()
 
         pygame.display.flip()
 
     def games(self):
         while self.running:
+            self.control.joystick()
             self.update()
 
     def run(self):

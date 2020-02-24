@@ -11,18 +11,21 @@ class GLOVAR:
         ignore_suffix = []
 
         init_config = self.s2c.readFromConfig("init")
+        self.import_init = 0
         path_config = self.s2c.readFromConfig("path")
+        self.import_init = 0
 
         # initiate config
         self.Fullscreen = init_config["Fullscreen"]
         self.Resolution = init_config["Resolution"]
         self.width = int(self.Resolution.split(",")[0])
         self.height = int(self.Resolution.split(",")[1])
-        self.FPS = init_config["FPS"]
+        self.targetFPS = init_config["targetFPS"]
 
         # path config
-        self.EffectAction = path_config["Effect-action"]
-        self.EffectSounds = path_config["Effect-sounds"]
-        self.Icon = path_config["Image-icon"]
-        self.Materials = path_config["Materials"]
-        self.Music = path_config["Music"]
+        self.EffectAction = abspath(path_config["Effect-action"])
+        self.EffectSounds = abspath(path_config["Effect-sounds"])
+        self.Icon = abspath(path_config["Image-icon"])
+        self.Materials = abspath(path_config["Materials"])
+        self.Music = abspath(path_config["Music"])
+        self.Fonts = abspath(path_config["Fonts"])

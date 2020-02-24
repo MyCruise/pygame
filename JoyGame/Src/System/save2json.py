@@ -27,7 +27,7 @@ class SAVE2CONFIG:
         init_dict = {
             "Resolution": "1280,720",
             "Fullscreen": 0,
-            "FPS": 60
+            "targetFPS": 60
         }
 
         self.save2config("init", init_dict)
@@ -35,17 +35,24 @@ class SAVE2CONFIG:
     def save2path(self):
         # "": "",
         path_dict = {
-            "Image-icon": abspath("JoyGame/Src/Assets/Image/icon"),
-            "Music": abspath("JoyGame/Src/Assets/Music"),
-            "Materials": abspath("JoyGame/Src/Assets/Materials"),
-            "Effect-action": abspath("JoyGame/Src/Assets/Effect/action"),
-            "Effect-sounds": abspath("JoyGame/Src/Assets/Effect/sounds")
+            "Image-icon": "JoyGame/Src/Assets/Image/icon",
+            "Music": "JoyGame/Src/Assets/Music",
+            "Materials": "JoyGame/Src/Assets/Materials",
+            "Effect-action": "JoyGame/Src/Assets/Effect/action",
+            "Effect-sounds": "JoyGame/Src/Assets/Effect/sounds",
+            "Fonts": "JoyGame/Src/Assets/Fonts"
         }
 
         self.save2config("path", path_dict)
+
+    def save2text(self):
+        path_dict = {
+            "": ""
+        }
 
 
 if __name__ == '__main__':
     s2c = SAVE2CONFIG()
     s2c.save2player()
     s2c.save2path()
+    s2c.save2text()

@@ -1,14 +1,15 @@
 import pygame
+import pymunk
 from JoyGame.Src.Include.vector import Vector2
 from JoyGame.Src.Include.glovar import GLOVAR
 from JoyGame.Src.System.screen import Screen
 
 
 class Physics:
-    def __init__(self, speed, mass, acceleration):
+    def __init__(self, screen, speed, mass, acceleration):
         # init variable
         self.glovar = GLOVAR()
-        self.screen = Screen()
+        self.screen = screen
         self.height = self.screen.height
         self.width = self.screen.width
         self.speed = speed
@@ -18,6 +19,9 @@ class Physics:
 
         # init timer
         self.clock = pygame.time.Clock()
+
+    def setbody(self):
+        pass
 
     def updateSpeed(self):
         test = Vector2.__add__(self.acceleration, self.gravity)

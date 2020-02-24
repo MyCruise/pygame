@@ -16,7 +16,7 @@ def abspath_join(path, dir):
     return path + '/' + dir
 
 
-def abspath(dst_dir):
+def abspath(dst_dir=""):
     return root_abspath('pygame_demo') + dst_dir
 
 

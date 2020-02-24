@@ -1,5 +1,5 @@
 {
-    "FPS": 60,
     "Fullscreen": 0,
-    "Resolution": "1280,720"
+    "Resolution": "1280,720",
+    "targetFPS": 60
 }
