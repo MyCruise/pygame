@@ -155,18 +155,7 @@ class Controller:
     def detect_joysticks(self):
         # Windows system platform
         if self.sysstr == "Windows":
-            if pygame.joystick.get_count():
-                self.controller = 1
-            else:
-                self.controller = 0
-            if self.controller != self.last_controller:
-                if self.controller == 1:
-                    print("controller connected")
-                else:
-                    print("controller disconnected")
-            else:
-                pass
-            self.last_controller = self.controller
+            self.controller = 1
             return self.controller
 
         # Linux system platform
@@ -195,5 +184,5 @@ if __name__ == '__main__':
     control = Controller()
     while control.running:
         # if control.isJoystick():
-        control.joystick(0.2)
+        control.joystick()
         print(control.hats_down)

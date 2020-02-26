@@ -21,7 +21,12 @@ class Menu:
         # init variable
         self.text_height = 0
         self.numButton = 0
+
         self.background_color = self.color.Black
+        self.press_anything_to_continue_color = self.color.White
+        self.length = 100
+
+        self.flip_flag = False
 
     def offset(self, height, offset):
         self.numButton += 1
@@ -46,10 +51,28 @@ class Menu:
 
     def layout_1(self):
         self.screen.screen.blit(self.screen.background, (0, 0))
+
         if self.background_color != self.color.White:
             self.background_color = self.color.__add__(self.background_color, (1, 1, 1))
-
         self.screen.set_background_color(self.background_color)
+
+    def press_anything_to_continue(self):
+        if self.flip_flag:
+            self.length += 1
+            self.press_anything_to_continue_color = self.color.__add__(self.press_anything_to_continue_color, (1, 1, 1))
+        elif not self.flip_flag:
+            self.length -= 1
+            self.press_anything_to_continue_color = self.color.__sub__(self.press_anything_to_continue_color, (1, 1, 1))
+        if self.press_anything_to_continue_color == self.color.Black:
+            self.flip_flag = True
+        elif self.press_anything_to_continue_color == self.color.White:
+            self.flip_flag = False
+        print(self.press_anything_to_continue_color, self.flip_flag)
+        self.text.addText("Press any button to continue", 20, (self.width / 2, self.height - 100),
+                          self.press_anything_to_continue_color, None, 3)
+        self.shape.mirror_horizontal_line(self.press_anything_to_continue_color,
+                                          (self.width / 2, self.height - 70), self.length, 2)
+
 
     def layout_2(self):
         self.screen.screen.blit(self.screen.background, (0, 0))

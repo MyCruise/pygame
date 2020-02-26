@@ -28,6 +28,18 @@ class Shape:
         pygame.draw.arc(self.screen, color, (rect[0], rect[3] - dia, dia, dia), radians(180), radians(270), width)
         pygame.draw.line(self.screen, color, (rect[0], rect[1] + rad), (rect[0], rect[3] - rad), width)
 
+    def mirror_horizontal_line(self, color: tuple, point: tuple, len: int, width: int):
+        len = int(len / 2)
+        start_pos = (point[0] - len, point[1])
+        end_pos = (point[0] + len, point[1])
+        pygame.draw.line(self.screen, color, start_pos, end_pos, width)
+
+    def mirror_vertical_line(self, color: tuple, point: tuple, len: int, width: int):
+        len = int(len / 2)
+        start_pos = (point[0], point[1] - len)
+        end_pos = (point[0], point[1] + len)
+        pygame.draw.line(self.screen, color, start_pos, end_pos, width)
+
     '''
     矩形
     pygame.draw.rect(self.sur, color, rect, width)
@@ -70,12 +82,13 @@ class Button:
         self.text = text
         self.shape = Shape(self.screen)
 
-    def round_button(self, text: str, font: int, color: tuple, point: tuple, size: tuple, rad: int, width: int, index: int):
+    def round_button(self, text: str, font: int, color: tuple, point: tuple, size: tuple, rad: int, width: int,
+                     index: int):
         self.shape.round_rect(color, point, size, rad, width)
         self.text.addText(text, font, (point[0] + size[0] / 2, point[1] + size[1] / 2), self.color.Black,
                           None, index)
 
     def choice_button(self, color: tuple, point: tuple, size: tuple, rad: int, width: int, index: int):
-        point = tuple(map(lambda i, j: i + j, point, (int(rad/2), int(rad/2))))
+        point = tuple(map(lambda i, j: i + j, point, (int(rad / 2), int(rad / 2))))
         size = tuple(map(lambda i, j: i - j, size, (rad, rad)))
-        self.shape.round_rect(color, point, size, rad-3, width)
+        self.shape.round_rect(color, point, size, rad - 3, width)

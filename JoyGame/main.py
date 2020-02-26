@@ -74,10 +74,10 @@ class Game:
             if event.type == KEYDOWN:
                 if event.key == K_ESCAPE:
                     self.running = False
-                if event.key == K_w and self.timer.elapse() > 0.15:
+                if event.key == K_w and self.timer.elapse() > 0.1:
                     self.mc.front()
                     self.timer.set_timer()
-                elif event.key == K_s and self.timer.elapse() > 0.15:
+                elif event.key == K_s and self.timer.elapse() > 0.1:
                     self.mc.rear()
                     self.timer.set_timer()
             if event.type == MOUSEMOTION:
@@ -88,7 +88,7 @@ class Game:
 
             if event.type == self.MAINLOOP:
                 # Menu control
-                if self.lock_control and self.mc.layer == 1:
+                if self.lock_control and self.mc.layer in [1, 2]:
                     if self.control.LS_down and self.timer.elapse() > 0.15:
                         self.mc.rear()
                         self.timer.set_timer()
@@ -96,16 +96,12 @@ class Game:
                         self.mc.front()
                         self.timer.set_timer()
 
-                    if self.control.A and self.timer.elapse() > 0.5:
-                        self.mc.next()
-                        print("a")
-                        print(self.mc.layer)
+                    if self.control.A and self.timer.elapse() > 0.3:
+                        self.mc.enter_menu()
                         self.timer.set_timer()
 
-                    if self.control.B and self.timer.elapse() > 0.5:
+                    if self.control.B and self.timer.elapse() > 0.3:
                         self.mc.previous()
-                        print("b")
-                        print(self.mc.layer)
                         self.timer.set_timer()
 
                     if self.control.hats_up and self.timer.elapse() > 0.15:
@@ -135,26 +131,30 @@ class Game:
     def display(self):
         if self.mc.layer == 0:
             self.menu.layout_1()
-            if self.timer.elapse() > 6:
-                self.mc.previous()
+            if self.timer.elapse() > 5 and self.joystick_button_press == 1:
+                self.mc.layer += 1
                 self.lock_control = 1
+                self.timer.set_timer()
+            if self.timer.elapse() > 4:
+                self.menu.press_anything_to_continue()
         if self.mc.layer == 1:
             self.menu.layout_2()
-            if self.mc.enter == 1:
-                if self.mc.index == 0:
-                    pass
-                if self.mc.index == 1:
-                    pass
-                if self.mc.index == 2:
-                    pass
-                if self.mc.index == 3:
-                    exit()
+            print(self.mc.index, self.mc.layer, self.mc.enter)
+            if self.mc.index == 0 and self.mc.enter:
+                self.mc.next()
+            if self.mc.index == 1 and self.mc.enter:
+                self.mc.next()
+            if self.mc.index == 2 and self.mc.enter:
+                self.mc.next()
+            if self.mc.index == 3 and self.mc.enter:
+                self.running = False
 
         pygame.display.flip()
 
     def games(self):
         while self.running:
-            self.control.joystick()
+            if self.control.detect_joysticks:
+                self.control.joystick()
             self.update()
             self.display()
 
