@@ -59,19 +59,24 @@ class Game:
 
         # initialize event
         self.MAINLOOP = next_event(pygame.USEREVENT)
+        self.CONTROLLER = next_event(self.MAINLOOP)
 
         # initialize timer
         pygame.time.set_timer(self.MAINLOOP, 16)
+        pygame.time.set_timer(self.CONTROLLER, 16)
 
         # initialize variable
         self.running = True
         self.ticks = 0
         self.lock_control = 0
-        self.joystick_button_press = 0
+        self.joystick_button_pressed = 0
+        self.key_button_pressed = 0
 
     def process_event(self):
         for event in pygame.event.get():
+            # Menu control by keyboard
             if event.type == KEYDOWN:
+                self.key_button_pressed = 1
                 if event.key == K_ESCAPE:
                     self.running = False
                 if event.key == K_w and self.timer.elapse() > 0.1:
@@ -80,14 +85,22 @@ class Game:
                 elif event.key == K_s and self.timer.elapse() > 0.1:
                     self.mc.rear()
                     self.timer.set_timer()
+            if event.type == KEYUP:
+                self.key_button_pressed = 0
+            # Menu control by mouse
+            if event.type == MOUSEBUTTONDOWN:
+                pass
+            if event.type == MOUSEBUTTONUP:
+                pass
             if event.type == MOUSEMOTION:
+                pass
                 # print(*pygame.mouse.get_pos())
                 pass
             if event.type == QUIT:
                 exit()
 
-            if event.type == self.MAINLOOP:
-                # Menu control
+            if event.type == self.CONTROLLER:
+                # Menu control by controller
                 if self.lock_control and self.mc.layer in [1, 2]:
                     if self.control.LS_down and self.timer.elapse() > 0.15:
                         self.mc.rear()
@@ -112,14 +125,16 @@ class Game:
                         self.timer.set_timer()
 
                 # Game control
+            if event.type == self.MAINLOOP:
+                pass
 
             # Joystick button pressed
             if event.type == pygame.JOYBUTTONDOWN:
-                self.joystick_button_press = 1
+                self.joystick_button_pressed = 1
 
             # Joystick button released
             elif event.type == pygame.JOYBUTTONUP:
-                self.joystick_button_press = 0
+                self.joystick_button_pressed = 0
 
     def update(self):
         self.process_event()
@@ -131,22 +146,23 @@ class Game:
     def display(self):
         if self.mc.layer == 0:
             self.menu.layout_1()
-            if self.timer.elapse() > 5 and self.joystick_button_press == 1:
+            if self.timer.elapse() > 5 and (self.joystick_button_pressed or self.key_button_pressed):
                 self.mc.layer += 1
                 self.lock_control = 1
                 self.timer.set_timer()
             if self.timer.elapse() > 4:
                 self.menu.press_anything_to_continue()
         if self.mc.layer == 1:
-            self.menu.layout_2()
-            print(self.mc.index, self.mc.layer, self.mc.enter)
-            if self.mc.index == 0 and self.mc.enter:
+            self.menu.homepage()
+        if self.mc.layer == 1 and self.mc.enter:
+            # print(self.mc.index, self.mc.layer, self.mc.enter)
+            if self.mc.index == 0:
                 self.mc.next()
-            if self.mc.index == 1 and self.mc.enter:
+            elif self.mc.index == 1:
                 self.mc.next()
-            if self.mc.index == 2 and self.mc.enter:
+            elif self.mc.index == 2:
                 self.mc.next()
-            if self.mc.index == 3 and self.mc.enter:
+            elif self.mc.index == 3:
                 self.running = False
 
         pygame.display.flip()

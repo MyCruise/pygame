@@ -24,7 +24,7 @@ class Menu:
 
         self.background_color = self.color.Black
         self.press_anything_to_continue_color = self.color.White
-        self.length = 100
+        self.length = 300
 
         self.flip_flag = False
 
@@ -67,20 +67,25 @@ class Menu:
             self.flip_flag = True
         elif self.press_anything_to_continue_color == self.color.White:
             self.flip_flag = False
-        print(self.press_anything_to_continue_color, self.flip_flag)
+        # print(self.press_anything_to_continue_color, self.flip_flag)
         self.text.addText("Press any button to continue", 20, (self.width / 2, self.height - 100),
                           self.press_anything_to_continue_color, None, 3)
         self.shape.mirror_horizontal_line(self.press_anything_to_continue_color,
                                           (self.width / 2, self.height - 70), self.length, 2)
 
-
-    def layout_2(self):
+    def homepage(self):
         self.screen.screen.blit(self.screen.background, (0, 0))
         self.layout_2_start__((240, 60), 310, 85)
         self.layout_choice(self.mc.index)
         self.__test__()
 
-    def layout_3(self):
+    def play(self):
+        pass
+
+    def setting(self):
+        pass
+
+    def tutorial(self):
         pass
 
     def __test__(self):
