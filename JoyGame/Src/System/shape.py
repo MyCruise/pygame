@@ -8,7 +8,7 @@ class Shape:
     def __init__(self, screen):
         self.screen = screen
 
-    def round_rect(self, color, point, size, rad, width):
+    def round_rect(self, color: tuple, point: tuple, size: tuple, rad: int, width: int):
         rect = [point[0], point[1], point[0] + size[0], point[1] + size[1]]
         dia = 2 * rad
         if size[0] < dia and size[1] < dia:
@@ -70,13 +70,12 @@ class Button:
         self.text = text
         self.shape = Shape(self.screen)
 
-    def button1(self, text, font, color, point, size, rad, width, index):
+    def round_button(self, text: str, font: int, color: tuple, point: tuple, size: tuple, rad: int, width: int, index: int):
         self.shape.round_rect(color, point, size, rad, width)
         self.text.addText(text, font, (point[0] + size[0] / 2, point[1] + size[1] / 2), self.color.Black,
                           None, index)
 
-    def button2(self, text, font, color, point, size, rad, width, index):
-        self.shape.round_rect(color, point, size, rad, width)
-        self.shape.round_rect(color, point, size, rad, width)
-        self.text.addText(text, font, (point[0] + size[0] / 2, point[1] + size[1] / 2), self.color.Black,
-                          None, index)
+    def choice_button(self, color: tuple, point: tuple, size: tuple, rad: int, width: int, index: int):
+        point = tuple(map(lambda i, j: i + j, point, (int(rad/2), int(rad/2))))
+        size = tuple(map(lambda i, j: i - j, size, (rad, rad)))
+        self.shape.round_rect(color, point, size, rad-3, width)

@@ -3,31 +3,28 @@ from JoyGame.Src.Include.glovar import GLOVAR
 
 
 class Screen:
-    def __init__(self, background_color, resolution=""):
+    def __init__(self, background_color):
         self.glovar = GLOVAR()
-        # init screen size variable
-        self.fullscreen = self.glovar.Fullscreen
-        self.Width = 0
-        self.Height = 0
+        # initialize screen size variable
+        self.Width = self.glovar.width
+        self.Height = self.glovar.height
 
-        if resolution == "":
-            self.Width = self.glovar.width
-            self.Height = self.glovar.height
-        elif resolution == "half":
-            self.Width = self.halfSize()
-            self.Height = self.halfSize()
-        elif resolution == "large":
-            self.Width = int(self.glovar.width * 3 / 4)
-            self.Height = int(self.glovar.height * 3 / 4)
-        elif resolution == "small":
-            self.Width = int(self.glovar.width * 1 / 4)
-            self.Height = int(self.glovar.height * 1 / 4)
+        self.resolution = (self.Width, self.Height)
+        self.targetFPS = self.glovar.targetFPS
 
-        self.FPS = self.glovar.targetFPS
+        # Set display mode
+        self.screen = pygame.display.set_mode(self.resolution)
+        if self.glovar.Mode == "FUllscreen":
+            self.screen = pygame.display.set_mode(self.resolution, pygame.FULLSCREEN, 32)
+        elif self.glovar.Mode == "Noframe":
+            self.screen = pygame.display.set_mode(self.resolution, pygame.NOFRAME, 32)
+        elif self.glovar.Mode == "Resizable":
+            self.screen = pygame.display.set_mode(self.resolution, pygame.RESIZABLE, 32)
+        elif self.glovar.Mode == "Hwsurface":
+            self.screen = pygame.display.set_mode(self.resolution, pygame.HWSURFACE, 32)
 
-        self.screen = pygame.display.set_mode(self.halfSize(), self.fullscreen)
-
-        self.background = pygame.Surface(self.screen.get_size())
+        # self.background = pygame.Surface(self.screen.get_size())
+        self.background = pygame.Surface(self.resolution)
         self.background = self.background.convert()
         self.background.fill(background_color)
 
@@ -38,6 +35,3 @@ class Screen:
         size = (self.Width, self.Height)
         return size
 
-    def halfSize(self):
-        halfSize = (self.Width, self.Height)
-        return halfSize

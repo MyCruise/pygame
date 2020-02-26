@@ -138,10 +138,22 @@ class Color:
         self.Black = (0, 0, 0)
 
     def __sub__(self, color1: tuple, color2: tuple):
-        return tuple(map(lambda i, j: i - j, color1, color2))
+        color = tuple(map(lambda i, j: i - j, color1, color2))
+        list = []
+        for c in color:
+            if c < 0:
+                c = 0
+            list.append(c)
+        return tuple(list)
 
     def __add__(self, color1: tuple, color2: tuple):
-        return tuple(map(lambda i, j: i + j, color1, color2))
+        color = tuple(map(lambda i, j: i + j, color1, color2))
+        list = []
+        for c in color:
+            if c > 255:
+                c = 255
+            list.append(c)
+        return tuple(list)
 
     def transparency(self, color: tuple, transparency):
         if transparency > 255:
@@ -155,4 +167,5 @@ class Color:
 if __name__ == '__main__':
     color = Color()
     print(color.Yellow, color.Blue)
-    print(color.__sub__(color.Yellow, color.Blue))
+    for i in range(1):
+        print(color.__sub__(color.Yellow, (i, i, i)))

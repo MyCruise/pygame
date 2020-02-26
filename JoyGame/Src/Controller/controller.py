@@ -2,15 +2,20 @@ import pygame
 from pygame.locals import *
 import os
 import platform
+from JoyGame.Src.System.physics import GLOVAR
 from JoyGame.Src.Include.vector import Vector2
 
 
 class Controller:
     def __init__(self):
+        # Initialize joystick
         pygame.init()
         pygame.joystick.init()
 
-        # init variable
+        # Initialize class
+        self.glovar = GLOVAR()
+
+        # initialize variable
         self.Menu = 0
         self.Start = 0
         self.LT = 0
@@ -21,6 +26,18 @@ class Controller:
         self.B = 0
         self.X = 0
         self.Y = 0
+        self.hats_up = 0
+        self.hats_down = 0
+        self.hats_right = 0
+        self.hats_left = 0
+        self.LS_up = 0
+        self.LS_down = 0
+        self.LS_left = 0
+        self.LS_right = 0
+        self.RS_up = 0
+        self.RS_down = 0
+        self.RS_left = 0
+        self.RS_right = 0
         self.hats = [0, 0]
         self.LS = [0, 0]
         self.RS = [0, 0]
@@ -33,38 +50,20 @@ class Controller:
 
         self.controller = 0
         self.last_controller = 0
+        self.deadband1 = self.glovar.deadband1
+        self.deadband2 = self.glovar.deadband2
 
         self.keyword = pygame.key.get_pressed()
         self.btn = pygame.mouse.get_pressed()
 
-        # init list
+        # initialize list
         self.name = []
 
-    def input(self):
-        for event in pygame.event.get():
-            if event.type == KEYDOWN:
-                self.keyword = pygame.key.get_pressed()
-            if event.type == MOUSEMOTION:
-                print(*pygame.mouse.get_pos())
-            self.btn = pygame.mouse.get_pressed()
-            if event.type == pygame.JOYBUTTONDOWN:
-                print("Joystick button pressed.")
-            elif event.type == pygame.JOYBUTTONUP:
-                print("Joystick button released.")
-
-            if event.type == pygame.QUIT:
-                print("exit")
-
-    def iskeyword(self, key):
-        return self.keyword == key
+    def isKeyword(self, key):
+        return key
 
     def joystick(self):
         pygame.joystick.init()
-        for event in pygame.event.get():  # User did something.
-            if event.type == pygame.JOYBUTTONDOWN:
-                print("Joystick button pressed.")
-            elif event.type == pygame.JOYBUTTONUP:
-                print("Joystick button released.")
 
         joystick_count = pygame.joystick.get_count()
 
@@ -74,13 +73,66 @@ class Controller:
 
             self.name = joystick.get_name()
 
-            axes = joystick.get_numaxes()
-            self.LS = [joystick.get_axis(0), joystick.get_axis(1)]
+            # axes = joystick.get_numaxes()
+            # self.LS = [joystick.get_axis(0), joystick.get_axis(1)]
+            # self.RS = [joystick.get_axis(3), joystick.get_axis(4)]
+
+            # Deadband1
+            if joystick.get_axis(0) < -self.deadband1:
+                self.LS_left = 1
+            elif joystick.get_axis(0) > self.deadband1:
+                self.LS_right = 1
+            else:
+                self.LS_left = 0
+                self.LS_right = 0
+
+            if joystick.get_axis(1) < -self.deadband1:
+                self.LS_up = 1
+            elif joystick.get_axis(1) > self.deadband1:
+                self.LS_down = 1
+            else:
+                self.LS_up = 0
+                self.LS_down = 0
+
+            if joystick.get_axis(3) < -self.deadband1:
+                self.RS_left = 1
+            elif joystick.get_axis(3) > self.deadband1:
+                self.RS_right = 1
+            else:
+                self.RS_left = 0
+                self.RS_right = 0
+
+            if joystick.get_axis(4) < self.deadband1:
+                self.RS_up = 1
+            elif joystick.get_axis(4) > -self.deadband1:
+                self.RS_down = 1
+            else:
+                self.RS_up = 0
+                self.RS_down = 0
+
+            # Deadband2
+            if joystick.get_axis(0) < -self.deadband2:
+                self.LS_left = 1
+            elif joystick.get_axis(0) > self.deadband2:
+                self.LS_right = 1
+            if joystick.get_axis(1) < -self.deadband2:
+                self.LS_up = 1
+            elif joystick.get_axis(1) > self.deadband2:
+                self.LS_down = 1
+
+            if joystick.get_axis(3) < -self.deadband2:
+                self.RS_left = 2
+            elif joystick.get_axis(3) > self.deadband2:
+                self.RS_right = 2
+            if joystick.get_axis(4) < self.deadband2:
+                self.RS_up = 2
+            elif joystick.get_axis(4) > -self.deadband2:
+                self.RS_down = 2
+
             self.LT = joystick.get_axis(2)
-            self.RS = [joystick.get_axis(3), joystick.get_axis(4)]
             # self.RT = joystick.get_axis(5)
 
-            buttons = joystick.get_numbuttons()
+            # buttons = joystick.get_numbuttons()
 
             self.A = joystick.get_button(0)
             self.B = joystick.get_button(1)
@@ -93,8 +145,12 @@ class Controller:
             self.RS_D = joystick.get_button(8)
             self.LS_D = joystick.get_button(9)
 
-            hats = joystick.get_numhats()
-            self.hats = hats
+            hats = joystick.get_numhats() - 1
+            self.hat = joystick.get_hat(hats)
+            self.hats_up = int(self.hat[1] == 1)
+            self.hats_right = int(self.hat[0] == -1)
+            self.hats_down = int(self.hat[1] == -1)
+            self.hats_left = int(self.hat[0] == 1)
 
     def detect_joysticks(self):
         # Windows system platform
@@ -115,15 +171,10 @@ class Controller:
 
         # Linux system platform
         elif self.sysstr == "Linux":
-            if pygame.joystick.get_count():
+            if os.path.exists("/dev/input/js0"):
                 self.controller = 1
             else:
                 self.controller = 0
-
-            # if os.path.exists("/dev/input/js0"):
-            #     self.controller = 1
-            # else:
-            #     self.controller = 0
 
             if self.controller != self.last_controller:
                 if self.controller == 1:
@@ -144,7 +195,5 @@ if __name__ == '__main__':
     control = Controller()
     while control.running:
         # if control.isJoystick():
-        control.joystick()
-        control.input()
-        # print(control.name)
-        # print(control.LS)
+        control.joystick(0.2)
+        print(control.hats_down)

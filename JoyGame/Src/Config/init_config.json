@@ -1,5 +1,5 @@
 {
-    "Fullscreen": 0,
+    "Mode": "Fullscreen",
     "Resolution": "1280,720",
     "targetFPS": 60
 }
