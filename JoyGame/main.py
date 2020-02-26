@@ -140,6 +140,15 @@ class Game:
                 self.lock_control = 1
         if self.mc.layer == 1:
             self.menu.layout_2()
+            if self.mc.enter == 1:
+                if self.mc.index == 0:
+                    pass
+                if self.mc.index == 1:
+                    pass
+                if self.mc.index == 2:
+                    pass
+                if self.mc.index == 3:
+                    exit()
 
         pygame.display.flip()
 
