@@ -93,11 +93,13 @@ class Button:
         size = tuple(map(lambda i, j: i - j, size, (rad, rad)))
         self.shape.round_rect(color, point, size, rad - 3, width)
 
-    def switch_bar(self, color: tuple, point: tuple, length: int, width: int, total: int, index: int):
+    def switch_bar(self, color: tuple, point: tuple, length: int, width: int, circle_width: int, total: int,
+                   index: int):
         if index < 0:
             index = 0
         elif index > total:
             index = total
         interval = length / (total + 1)
+        left_endpoint = point[0] - length / 2
         self.shape.horizontal_line(color, point, length, width)
-        # pygame.draw.circle(self.screen, pos, radius, color, width)
+        pygame.draw.circle(self.screen, (point[0], left_endpoint + interval * index), width * 5, color, circle_width)

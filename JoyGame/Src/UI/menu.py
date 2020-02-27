@@ -62,7 +62,7 @@ class Menu:
     def layout_homepage_choice(self, index: int):
         menu_height = 310
         menu_height = self.offset(menu_height, index * 85)
-        self.button.choice_button(self.color.Gray, (self.width / 2 - 120, menu_height), (240, 60), 10, 2, 0)
+        self.button.choice_button(self.color.Gray, (self.width / 2 - 120, menu_height), (240, 60), 10, 2)
 
     def logo_page(self):
         self.screen.screen.blit(self.screen.background, (0, 0))
@@ -82,6 +82,7 @@ class Menu:
 
     def setting(self):
         self.screen.screen.blit(self.screen.background, (0, 0))
+        self.button.switch_bar(self.color.Black, (self.width, 100), 200, 5, 0, 10, 1)
 
     def tutorial(self):
         self.screen.screen.blit(self.screen.background, (0, 0))
