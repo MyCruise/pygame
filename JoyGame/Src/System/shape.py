@@ -28,13 +28,13 @@ class Shape:
         pygame.draw.arc(self.screen, color, (rect[0], rect[3] - dia, dia, dia), radians(180), radians(270), width)
         pygame.draw.line(self.screen, color, (rect[0], rect[1] + rad), (rect[0], rect[3] - rad), width)
 
-    def mirror_horizontal_line(self, color: tuple, point: tuple, len: int, width: int):
+    def horizontal_line(self, color: tuple, point: tuple, len: int, width: int):
         len = int(len / 2)
         start_pos = (point[0] - len, point[1])
         end_pos = (point[0] + len, point[1])
         pygame.draw.line(self.screen, color, start_pos, end_pos, width)
 
-    def mirror_vertical_line(self, color: tuple, point: tuple, len: int, width: int):
+    def vertical_line(self, color: tuple, point: tuple, len: int, width: int):
         len = int(len / 2)
         start_pos = (point[0], point[1] - len)
         end_pos = (point[0], point[1] + len)
@@ -88,7 +88,16 @@ class Button:
         self.text.addText(text, font, (point[0] + size[0] / 2, point[1] + size[1] / 2), self.color.Black,
                           None, index)
 
-    def choice_button(self, color: tuple, point: tuple, size: tuple, rad: int, width: int, index: int):
+    def choice_button(self, color: tuple, point: tuple, size: tuple, rad: int, width: int):
         point = tuple(map(lambda i, j: i + j, point, (int(rad / 2), int(rad / 2))))
         size = tuple(map(lambda i, j: i - j, size, (rad, rad)))
         self.shape.round_rect(color, point, size, rad - 3, width)
+
+    def switch_bar(self, color: tuple, point: tuple, length: int, width: int, total: int, index: int):
+        if index < 0:
+            index = 0
+        elif index > total:
+            index = total
+        interval = length / (total + 1)
+        self.shape.horizontal_line(color, point, length, width)
+        # pygame.draw.circle(self.screen, pos, radius, color, width)

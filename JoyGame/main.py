@@ -14,6 +14,7 @@ from JoyGame.Src.Include.color import Color
 # System
 from JoyGame.Src.System.event import next_event
 from JoyGame.Src.System.screen import Screen
+from JoyGame.Src.System.music import Music
 from JoyGame.Src.System.physics import Physics
 from JoyGame.Src.System.shape import Shape
 from JoyGame.Src.System.text import Text
@@ -35,7 +36,6 @@ from JoyGame.Src.UI.map import Map
 class Game:
     def __init__(self):
         pygame.init()
-        pygame.display.set_caption("Dungeon Adventure")
         self.control = Controller()
         self.glovar = GLOVAR()
         self.clock = pygame.time.Clock()
@@ -49,7 +49,13 @@ class Game:
         self.mc = MenuControl()
         self.menu = Menu(self.screen, self.text, self.clock, self.glovar, self.mc)
         self.button = Button(self.screen.screen, self.text)
-
+        self.title_en = ""
+        for letter in self.glovar.title_en_1.split(" "):
+            self.title_en += letter
+        self.title_en += " "
+        for letter in self.glovar.title_en_2.split(" "):
+            self.title_en += letter
+        pygame.display.set_caption(self.title_en)
         # display information
         print("platform: \t\t" + sys.platform)
         print("revolution: \t" + str(self.screen.resolution))
@@ -68,6 +74,7 @@ class Game:
         # initialize variable
         self.running = True
         self.ticks = 0
+        self.layout_name = ""
         self.lock_control = 0
         self.joystick_button_pressed = 0
         self.key_button_pressed = 0
@@ -95,9 +102,6 @@ class Game:
             if event.type == MOUSEMOTION:
                 pass
                 # print(*pygame.mouse.get_pos())
-                pass
-            if event.type == QUIT:
-                exit()
 
             if event.type == self.CONTROLLER:
                 # Menu control by controller
@@ -143,28 +147,53 @@ class Game:
         self.ticks = pygame.time.get_ticks() / 1000
         pygame.display.set_caption("Dungeon Adventure" + self.timer.num2time(self.ticks))
 
-    def display(self):
-        if self.mc.layer == 0:
-            self.menu.layout_1()
-            if self.timer.elapse() > 5 and (self.joystick_button_pressed or self.key_button_pressed):
-                self.mc.layer += 1
-                self.lock_control = 1
-                self.timer.set_timer()
-            if self.timer.elapse() > 4:
-                self.menu.press_anything_to_continue()
-        if self.mc.layer == 1:
-            self.menu.homepage()
         if self.mc.layer == 1 and self.mc.enter:
             # print(self.mc.index, self.mc.layer, self.mc.enter)
             if self.mc.index == 0:
+                self.layout_name = "play"
                 self.mc.next()
             elif self.mc.index == 1:
+                self.layout_name = "setting"
                 self.mc.next()
             elif self.mc.index == 2:
+                self.layout_name = "tutorial"
                 self.mc.next()
             elif self.mc.index == 3:
                 self.running = False
 
+        if self.mc.layer == 2 and self.mc.enter:
+            pass
+        elif self.mc.layer == 3:
+            pass
+        elif self.mc.layer == 3 and self.mc.enter:
+            pass
+
+    def display(self):
+        # Loading interface
+        if self.mc.layer == 0:
+            self.menu.logo_page()
+            if self.timer.elapse() > 12 and (self.joystick_button_pressed or self.key_button_pressed):
+                self.mc.layer += 1
+                self.lock_control = 1
+                self.timer.set_timer()
+            if self.timer.elapse() > 12:
+                self.screen.breath_color_lock = True
+                self.menu.load_page()
+
+        # Homepage interface
+        if self.mc.layer == 1:
+            self.menu.homepage()
+
+        # Layer 2
+        if self.mc.layer == 2:
+            if self.layout_name == "play":
+                self.menu.play()
+            if self.layout_name == "setting":
+                self.menu.setting()
+            if self.layout_name == "tutorial":
+                self.menu.tutorial()
+
+        self.menu.__test__()
         pygame.display.flip()
 
     def games(self):

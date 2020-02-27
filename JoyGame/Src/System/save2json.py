@@ -26,7 +26,7 @@ class SAVE2CONFIG:
         # "": "",
         init_dict = {
             "Resolution": "1280,720",
-            "Mode": "Fullscreen",
+            "Mode": "noframe",
             "targetFPS": 60
         }
 
@@ -48,10 +48,10 @@ class SAVE2CONFIG:
     def save2layout(self):
         # "": "",
         title_dict = {
-            "title_cn_1": "D u n g e o n",
-            "title_cn_2": "A d v e n t u r e",
-            "title_en_1": "地牢",
-            "title_en_2": "冒险"
+            "title_en_1": "D u n g e o n",
+            "title_en_2": "A d v e n t u r e",
+            "title_cn_1": "地牢",
+            "title_cn_2": "冒险"
         }
 
         layout_button_dict = {
@@ -72,6 +72,22 @@ class SAVE2CONFIG:
         }
 
         self.save2config("control", control_dict)
+
+    def save2play(self):
+        # "": "",
+        play_dict = {
+            "1": ["creat_map"],
+            "2`": ["load_map"],
+            "3": ["random_map"]
+        }
+
+    def save2setting(self):
+        # "": "",
+        setting_dict = {
+            "1": [""],
+            "2": [],
+            "3": []
+        }
 
     def init_config(self):
         s2c.save2player()

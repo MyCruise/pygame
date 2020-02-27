@@ -1,3 +1,3 @@
-# pygame
+# Dungeon Adventure
 Just for fun.
 

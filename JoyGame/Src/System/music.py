@@ -4,11 +4,15 @@ from JoyGame.Src.Include.abspath import abspath_join
 
 
 class Music:
-    def __init__(self, path):
+    def __init__(self, glovar):
+        # Initialize class
+        self.glovar = glovar
+
+        # Initialize variable
         self.index = 0
         self.pause = 0
         self.volume = 0
-        self.musicList = os.listdir(path)
+        self.musicList = os.listdir(self.glovar)
         self.totalMusic = len(self.musicList)
         self.music = pygame.mixer_music.load("")
 

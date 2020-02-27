@@ -1,4 +1,5 @@
 import os
+import pygame
 from JoyGame.Src.Include.glovar import GLOVAR
 
 
@@ -6,6 +7,7 @@ class Map:
     def __init__(self, width, height):
         self.width = width
         self.height = height
+        self.map = pygame.Surface()
 
     def __set__(self, instance, value):
         pass
