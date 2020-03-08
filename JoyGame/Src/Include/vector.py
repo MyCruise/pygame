@@ -21,6 +21,22 @@ class Vector2:
     def __div__(self, other):
         return Vector2(self.x / other.x, self.y / other.y)
 
+    def __mul_var__(self, var):
+        return Vector2(self.x * var, self.y * var)
+
+    def __div_var__(self, var):
+        return Vector2(self.x / var, self.y / var)
+
+    def __reset__(self):
+        return Vector2(0, 0)
+
+    def __reverse__(self):
+        return Vector2(-self.x, -self.y)
+
+    def __tuple__(self):
+        ret = (self.x, self.y)
+        return ret
+
     def list2vector(self, list1):
         return Vector2(list1[0], list1[1])
 

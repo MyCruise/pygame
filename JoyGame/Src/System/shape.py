@@ -85,7 +85,7 @@ class Button:
     def round_button(self, text: str, font: int, color: tuple, point: tuple, size: tuple, rad: int, width: int,
                      index: int):
         self.shape.round_rect(color, point, size, rad, width)
-        self.text.addText(text, font, (point[0] + size[0] / 2, point[1] + size[1] / 2), self.color.Black,
+        self.text.addText(text, "en", font, (point[0] + size[0] / 2, point[1] + size[1] / 2), self.color.Black,
                           None, index)
 
     def choice_button(self, color: tuple, point: tuple, size: tuple, rad: int, width: int):
@@ -93,13 +93,30 @@ class Button:
         size = tuple(map(lambda i, j: i - j, size, (rad, rad)))
         self.shape.round_rect(color, point, size, rad - 3, width)
 
-    def switch_bar(self, color: tuple, point: tuple, length: int, width: int, circle_width: int, total: int,
-                   index: int):
+    def switch_bar(self, text_list: list, color: tuple, point: tuple, length: int, width: int, circle_width: int,
+                   total: int, index: int, text_index: int):
         if index < 0:
-            index = 0
-        elif index > total:
             index = total
-        interval = length / (total + 1)
-        left_endpoint = point[0] - length / 2
+        elif index > total:
+            index = 0
+        interval = int(length / (total + 1))
+        left_endpoint = int(point[0] - length / 2)
         self.shape.horizontal_line(color, point, length, width)
-        pygame.draw.circle(self.screen, (point[0], left_endpoint + interval * index), width * 5, color, circle_width)
+        pygame.draw.circle(self.screen, self.color.__div__(color, 5), (left_endpoint + interval * index, point[1]),
+                           width * 2, circle_width)
+        self.text.addText(text_list[index], "en", 16, (point[0] - length, point[1] + length), color, None, text_index)
+
+    def joystick_button_icon(self, text: str, color: tuple, length: int, point: tuple, width: int,
+                             index: int):
+        self.text.addText(text, "en", length, point, color, None, index)
+        pygame.draw.circle(self.screen, color, point, length, width)
+
+    def joystick_button(self, button, point):
+        if button == "A":
+            self.joystick_button_icon("A", self.color.Red, 25, point, 1, 2)
+        elif button == "B":
+            self.joystick_button_icon("B", self.color.Green, 25, point, 1, 2)
+        elif button == "X":
+            self.joystick_button_icon("X", self.color.Blue, 25, point, 1, 2)
+        elif button == "Y":
+            self.joystick_button_icon("Y", self.color.Yellow, 25, point, 1, 2)

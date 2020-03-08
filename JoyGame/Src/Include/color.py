@@ -137,6 +137,15 @@ class Color:
         self.DimGray = (105, 105, 105)
         self.Black = (0, 0, 0)
 
+    def __add__(self, color1: tuple, color2: tuple):
+        color = tuple(map(lambda i, j: i + j, color1, color2))
+        list = []
+        for c in color:
+            if c > 255:
+                c = 255
+            list.append(c)
+        return tuple(list)
+
     def __sub__(self, color1: tuple, color2: tuple):
         color = tuple(map(lambda i, j: i - j, color1, color2))
         list = []
@@ -146,13 +155,22 @@ class Color:
             list.append(c)
         return tuple(list)
 
-    def __add__(self, color1: tuple, color2: tuple):
-        color = tuple(map(lambda i, j: i + j, color1, color2))
+    def __mul__(self, color: tuple, multiple: int):
         list = []
         for c in color:
+            c *= multiple
             if c > 255:
                 c = 255
             list.append(c)
+        return tuple(list)
+
+    def __div__(self, color: tuple, multiple: int):
+        list = []
+        for c in color:
+            c *= multiple
+            if c < 0:
+                c = 0
+            list.append(int(c))
         return tuple(list)
 
     def transparency(self, color: tuple, transparency):

@@ -1,0 +1,30 @@
+{
+    "1": [
+        "resolution",
+        "1280,720"
+    ],
+    "2": [
+        "brightness",
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+    ],
+    "3": [
+        "display_mode",
+        "fullscreen",
+        "halfscreen",
+        "noframe"
+    ],
+    "4": [
+        "control_device",
+        "mouse & keyboard",
+        "controller"
+    ]
+}

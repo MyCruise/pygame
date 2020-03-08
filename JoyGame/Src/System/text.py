@@ -17,19 +17,29 @@ class Text:
         self.maxLength_chinese = len(self.fonts_chinese)
         self.maxLength_alpha = len(self.fonts_alpha)
 
-    def addText(self, text: str, size: int, position: tuple, color: tuple, background_color, index: int):
-        if self.isChinese(text):
+    def addText(self, text: str, label: str, size: int, position: tuple, color: tuple, background_color, index: int):
+        # Chinese language
+        if label == "cn":
             if index > self.maxLength_chinese:
                 index = self.maxLength_chinese
             self.fontObj = pygame.font.Font(abspath_join(self.fonts_chinese_path, self.fonts_chinese[index]), size)
-        elif self.isAlphabet(text):
+        # English language
+        elif label == "en":
             if index > self.maxLength_alpha:
                 index = self.maxLength_alpha
             self.fontObj = pygame.font.Font(abspath_join(self.fonts_alpha_path, self.fonts_alpha[index]), size)
+        # other language
         else:
             if index > self.maxLength_alpha:
                 index = self.maxLength_alpha
-            self.fontObj = pygame.font.Font(abspath_join(self.fonts_alpha_path, self.fonts_alpha[index]), size)
+            self.fontObj = pygame.font.Font("", size)
+
+        # if self.isChinese(text):
+        #     pass
+        # elif self.isAlphabet(text):
+        #     pass
+        # else:
+        #     pass
 
         if background_color is None:
             textSurfaceObj = self.fontObj.render(text, True, color)

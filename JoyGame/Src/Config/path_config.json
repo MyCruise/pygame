@@ -1,8 +1,11 @@
 {
-    "Effect-action": "JoyGame/Src/Assets/Effect/action",
-    "Effect-sounds": "JoyGame/Src/Assets/Effect/sounds",
-    "Fonts": "JoyGame/Src/Assets/Fonts",
-    "Image-icon": "JoyGame/Src/Assets/Image/icon",
-    "Materials": "JoyGame/Src/Assets/Materials",
-    "Music": "JoyGame/Src/Assets/Music"
+    "Effect-character": "JoyGame/Src/Assets/Effect/character/",
+    "Effect-sounds": "JoyGame/Src/Assets/Effect/sounds/",
+    "Fonts": "JoyGame/Src/Assets/Fonts/",
+    "Materials": "JoyGame/Src/Assets/Materials/",
+    "Materials-character": "JoyGame/Src/Assets/Materials/character/",
+    "Materials-environment": "JoyGame/Src/Assets/Materials/environment/",
+    "Materials-images-icon": "JoyGame/Src/Assets/Materials/image/icon/",
+    "Materials-sounds": "JoyGame/Src/Assets/Materials/sounds/",
+    "Music": "JoyGame/Src/Assets/Music/"
 }

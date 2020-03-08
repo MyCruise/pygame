@@ -50,11 +50,16 @@ class Controller:
 
         self.controller = 0
         self.last_controller = 0
+
+        self.mouse_position = ()
+
         self.deadband1 = self.glovar.deadband1
         self.deadband2 = self.glovar.deadband2
 
         self.keyword = pygame.key.get_pressed()
         self.btn = pygame.mouse.get_pressed()
+        self.joystick_button_pressed = 0
+        self.key_button_pressed = 0
 
         # initialize list
         self.name = []
@@ -138,10 +143,10 @@ class Controller:
             self.B = joystick.get_button(1)
             self.X = joystick.get_button(2)
             self.Y = joystick.get_button(3)
-            self.Menu = joystick.get_button(4)
-            self.Start = joystick.get_button(5)
-            self.LB = joystick.get_button(6)
-            self.RB = joystick.get_button(7)
+            self.LB = joystick.get_button(4)
+            self.RB = joystick.get_button(5)
+            self.Menu = joystick.get_button(6)
+            self.Start = joystick.get_button(7)
             self.RS_D = joystick.get_button(8)
             self.LS_D = joystick.get_button(9)
 
@@ -151,6 +156,10 @@ class Controller:
             self.hats_right = int(self.hat[0] == -1)
             self.hats_down = int(self.hat[1] == -1)
             self.hats_left = int(self.hat[0] == 1)
+
+    def init_control(self):
+        pygame.joystick.quit()
+        pygame.joystick.init()
 
     def detect_joysticks(self):
         # Windows system platform
@@ -167,8 +176,10 @@ class Controller:
 
             if self.controller != self.last_controller:
                 if self.controller == 1:
+                    self.init_control()
                     print("controller connected")
                 else:
+                    self.init_control()
                     print("controller disconnected")
             else:
                 pass
