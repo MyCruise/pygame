@@ -20,9 +20,9 @@ from JoyGame.Src.System.text import Text
 from JoyGame.Src.System.shape import Button
 from JoyGame.Src.System.timer import Timer
 from JoyGame.Src.System.picture import Picture
+from JoyGame.Src.System.sounds import Sounds
 
 # Script
-from JoyGame.Src.Script.initCharacter import InitCharacter
 from JoyGame.Src.Script.menuControl import MenuControl
 
 # Controller
@@ -48,9 +48,11 @@ class Game:
         self.timer = Timer()
         self.text = Text(self.screen.screen)
         self.shape = Shape(self.screen.screen)
-        self.picture = Picture(self.screen, self.glovar)
+        self.picture = Picture(self.screen)
         self.mc = MenuControl(self.controller, self.timer)
         self.games = Games(self.screen)
+        self.music = Music()
+        self.sounds = Sounds()
         self.menu = Menu(self.screen, self.text, self.clock, self.mc, self.games)
         self.button = Button(self.screen.screen, self.text)
 
@@ -138,7 +140,6 @@ class Game:
         if self.mc.layer == 1:
             self.mc.layer_name = "homepage"
         if self.mc.layer == 1 and self.mc.enter:
-            # print(self.mc.index, self.mc.layer, self.mc.enter)
             if self.mc.index == 0:
                 self.mc.layer_name = "play"
                 self.mc.next()
@@ -164,7 +165,8 @@ class Game:
                 self.mc.next()
 
         # Layer 3
-        elif self.mc.layer == 3 and self.mc.layer_name == "start":
+        elif self.mc.layer == 3 and (
+                self.mc.layer_name == "start" or self.mc.layer_name == "create" or self.mc.layer_name == "load"):
             if not self.mc.pause:
                 self.mc.game_control(self.games.Fallen_Angels_2)
             else:
@@ -184,6 +186,12 @@ class Game:
                     self.mc.enter = False
 
     def display(self):
+        # Loading music
+        if self.mc.layer == 0 and self.timer.elapse() < 10:
+            self.sounds.__play__()
+        else:
+            self.sounds.pause()
+
         # Loading interface
         if self.mc.layer == 0:
             self.menu.logo_page()
@@ -216,6 +224,10 @@ class Game:
         # Layer 3
         elif self.mc.layer == 3:
             if self.mc.layer_name == "start":
+                self.menu.game()
+            if self.mc.layer_name == "create":
+                self.menu.game()
+            if self.mc.layer_name == "load":
                 self.menu.game()
         if self.controller.controller and self.controller.last_controller:
             if self.controller.controller:

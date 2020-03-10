@@ -104,7 +104,7 @@ class Button:
         self.shape.horizontal_line(color, point, length, width)
         pygame.draw.circle(self.screen, self.color.__div__(color, 5), (left_endpoint + interval * index, point[1]),
                            width * 2, circle_width)
-        self.text.addText(text_list[index], "en", 16, (point[0] - length, point[1] + length), color, None, text_index)
+        self.text.addText(text_list, "en", 16, (point[0] - length, point[1]), color, None, text_index)
 
     def joystick_button_icon(self, text: str, color: tuple, length: int, point: tuple, width: int,
                              index: int):

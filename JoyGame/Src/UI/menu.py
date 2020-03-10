@@ -22,7 +22,7 @@ class Menu:
         self.text = text
         self.mc = mc
         self.games = games
-        self.picture = Picture(self.screen, self.glovar)
+        self.picture = Picture(self.screen)
         self.shape = Shape(self.screen.screen)
         self.button = Button(self.screen.screen, text)
 
@@ -91,8 +91,9 @@ class Menu:
                 try:
                     height = self.offset(height, span)
                     self.button.switch_bar(self.glovar.setting_menu_config[str(i)][0], self.color.Black,
-                                           (point[0], height), length, index_list[int(i) - 1], 0,
-                                           len(self.glovar.setting_menu_config[str(i)][index_list[int(i) - 1]]), index_list[int(i) - 1], 2)
+                                           (point[0], height), length, 2, 3,
+                                           len(self.glovar.setting_menu_config[str(i)][index_list[int(i) - 1]]),
+                                           index_list[int(i) - 1], 2)
                 except Exception as error:
                     print(len(self.glovar.setting_menu_config[i][1:]))
                     print(self.glovar.setting_menu_config[i][1:])
@@ -142,12 +143,13 @@ class Menu:
     def setting(self):
         self.screen.reset_background_color()
         self.screen.screen.blit(self.screen.background, (0, 0))
-        self.setting_menu((int(self.width/2), 100), 30, 200, [0, 0, 0, 0])
+        self.setting_menu((int(self.width / 2), 100), 30, 200, [0, 0, 0, 0])
 
     def tutorial(self):
         self.screen.reset_background_color()
         self.screen.screen.blit(self.screen.background, (0, 0))
-        self.text.addText("", "en", 20, (int(self.width / 2), 100), self.color.Green, None, 2)
+        self.text.addText("Icon", "en", 40, (int(self.width / 2), 100), self.color.Gray, None, 2)
+        self.picture.addImage(self.picture.load_image("Biohazard", (600, 600)), (int(self.width / 2) - 300, 110))
 
     def game(self):
         self.screen.reset_background_color()

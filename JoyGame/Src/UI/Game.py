@@ -6,6 +6,7 @@ from JoyGame.Src.Include.glovar import GLOVAR
 from JoyGame.Src.Include.vector import Vector2
 from JoyGame.Src.UI.map import Map
 from JoyGame.Src.Character.character import Character
+from JoyGame.Src.Character.sprite import MySprite
 
 
 class Games:
@@ -18,10 +19,14 @@ class Games:
         self.characters = os.listdir(self.glovar.MaterialsAction)
         self.animations = os.listdir(abspath_join(self.glovar.MaterialsAction, self.characters[0]))
 
-        self.character_index = 1
+        self.character_index = 0
+
+        # Group
+        self.group = pygame.sprite.Group()
+        self.group_init = False
 
         # Initialize character
-        self.Fallen_Angels_2 = Character(self.screen, 10, self.characters[self.character_index])
+        self.Fallen_Angels_2 = Character(screen, self.characters[self.character_index])
         self.Fallen_Angels_2.set_position(Vector2(30, 30))
 
     def __next__(self):
@@ -29,12 +34,15 @@ class Games:
         if self.character_index < len(self.characters):
             self.character_index = 0
 
-    def game_ui(self):
+    def init_character(self):
         self.map.mapping((0, 0))
-        self.Fallen_Angels_2.update_sprite()
+        self.group.add(self.Fallen_Angels_2)
+        self.group_init = True
 
-    def main_logic(self):
-        pass
-
-    def map(self):
-        pass
+    def game_ui(self):
+        if not self.group_init:
+            self.init_character()
+        ticks = pygame.time.get_ticks()
+        self.map.update(ticks)
+        self.group.update(ticks)
+        self.group.draw(self.screen.screen)

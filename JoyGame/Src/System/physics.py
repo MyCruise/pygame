@@ -5,12 +5,10 @@ from JoyGame.Src.Include.glovar import GLOVAR
 
 
 class Physics:
-    def __init__(self, width, height, mass, clock):
+    def __init__(self):
         # init variable
         self.glovar = GLOVAR()
-        self.width = width
-        self.height = height
-        self.mass = mass
+        self.last_Position = Vector2(0, 0)
         self.Position = Vector2(0, 0)
         self.position = Vector2(0, 0)
         self.altitude = Vector2(0, 0)
@@ -23,16 +21,10 @@ class Physics:
         self.maxJumpSpeed = 20
         self.maxSpeed = 10
         self.maxHeight = 40
-
-        # initialize timer
-        self.clock = clock
+        self.changePosition = False
 
     def setPosition(self, position: Vector2):
-        if 0 < position.x < self.width and 0 < position.y < self.height:
-            self.Position = position
-
-    def updateMomentum(self, anotherMass: Vector2, anotherSpeed: Vector2):
-        self.Speed = anotherMass * anotherSpeed / self.mass
+        self.Position = position
 
     def updataPosition(self):
         return self.Speed
@@ -44,10 +36,14 @@ class Physics:
 
     def updatePosition(self):
         self.updateAltitude()
-        # print(self.updateAltitude().__self__(), self.updataPosition().__self__())
         self.altitude = self.altitude.__add__(self.updateAltitude())
         self.position = self.position.__add__(self.updataPosition())
         self.Position = Vector2.__add__(self.altitude, self.position)
+        self.changePosition = self.isPosition()
+        self.last_Position = self.Position
+
+    def isPosition(self):
+        return self.last_Position.__tuple__() != self.Position.__tuple__()
 
     def leap(self):
         if not self.jump_flag:

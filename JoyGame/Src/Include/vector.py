@@ -60,6 +60,9 @@ class Vector2:
     def changeAngle(self, center, point, angle):
         pass
 
+    def compare(self, p1, p2):
+        return
+
 
 class Vector3:
     def __init__(self, x, y, z):

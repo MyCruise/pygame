@@ -1,6 +1,6 @@
 import os
 from JoyGame.Src.Tools.save2json import SAVE2CONFIG
-from JoyGame.Src.Include.abspath import abspath
+from JoyGame.Src.Include.abspath import abspath, abspath_join
 
 
 class GLOVAR:
@@ -37,12 +37,13 @@ class GLOVAR:
         # Path config
         self.EffectSounds = abspath(path_config["Effect-sounds"])
         self.Materials = abspath(path_config["Materials"])
-        self.Music = abspath(path_config["Music"])
+        self.Music = abspath(path_config["music"])
         self.Fonts = abspath(path_config["Fonts"])
         self.MaterialsAction = abspath(path_config["Materials-character"])
         self.MaterialsEnvironment = abspath(path_config["Materials-environment"])
         self.MaterialsSounds = abspath(path_config["Materials-sounds"])
         self.MaterialsImagesIcon = abspath(path_config["Materials-images-icon"])
+        self.MaterialsMusic = abspath(path_config["Materials-music"])
 
         # Title config
         self.title_cn_1 = title_config["title_cn_1"]
@@ -57,5 +58,4 @@ class GLOVAR:
 
 if __name__ == '__main__':
     glovar = GLOVAR()
-    print(glovar.MaterialsAction)
-    print(os.listdir(glovar.MaterialsAction+"/"+os.listdir(glovar.MaterialsAction)[0]))
+    s2c = SAVE2CONFIG()

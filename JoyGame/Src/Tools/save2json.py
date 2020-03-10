@@ -1,10 +1,14 @@
+import os
+import json
 from JoyGame.Src.System.toJson import config_wt, config_rd
 from JoyGame.Src.Include.abspath import abspath
+import random
 
 
 class SAVE2CONFIG:
     def __init__(self):
         self.path = abspath('JoyGame/Src/Config/')
+        self.map_index = 0
 
     def save2config(self, config_name, dict, display=False):
         sorted(dict.keys())
@@ -13,10 +17,17 @@ class SAVE2CONFIG:
         if display:
             print(config_dict)
 
-    def readFromConfig(self, config_name, display="False"):
+    def readFromConfig(self, config_name, display=False):
         config_dict = config_rd(self.path + config_name + "_config", display)
         if display:
             print(config_dict)
+        return config_dict
+
+    def readFromSpritesConfig(self, filePath, display=False):
+        config_dict = config_rd(filePath, display)
+        json_dict = json.dumps(config_dict, sort_keys=True, indent=4, separators=(',', ': '))
+        if display:
+            print(json_dict)
         return config_dict
 
     def save2player(self):
@@ -34,7 +45,7 @@ class SAVE2CONFIG:
     def save2path(self):
         # "": "",
         path_dict = {
-            "Music": "JoyGame/Src/Assets/Music/",
+            "music": "JoyGame/Src/Assets/music/",
             "Materials": "JoyGame/Src/Assets/Materials/",
             "Effect-character": "JoyGame/Src/Assets/Effect/character/",
             "Effect-sounds": "JoyGame/Src/Assets/Effect/sounds/",
@@ -42,6 +53,7 @@ class SAVE2CONFIG:
             "Materials-character": "JoyGame/Src/Assets/Materials/character/",
             "Materials-environment": "JoyGame/Src/Assets/Materials/environment/",
             "Materials-sounds": "JoyGame/Src/Assets/Materials/sounds/",
+            "Materials-music": "JoyGame/Src/Assets/Materials/music/",
             "Materials-images-icon": "JoyGame/Src/Assets/Materials/image/icon/"
         }
         self.save2config("path", path_dict)
@@ -98,45 +110,40 @@ class SAVE2CONFIG:
     def save2tutorial(self):
         # "": "",
         tutorial_dict = {
-            "1": [""],
-            "2": [""],
-            "3": [""]
+            "1": ["1"],
+            "2": ["2"],
+            "3": ["3"]
         }
 
         self.save2config("tutorial", tutorial_dict)
 
     def save2game_pause_menu(self):
-        # "": "",
+        # "land_": "land_",
         game_pause_menu_dict = {
             "0": ["Resume", 35, 1],
             "1": ["Setting", 35, 1],
-            "2": ["Homepage", 35, 1],
+            "2": ["Homepage", 35, 1]
         }
 
         self.save2config("game_pause_menu", game_pause_menu_dict)
 
-    def save2map(self, map_dict):
-        # "": "",
-        map_dict = {
-            "0": ["land_1", (0, 0)],
-            "1": ["land_1", (0, 1)],
-            "2": ["land_1", (0, 2)],
-            "3": ["land_9", (0, 3)],
-            "4": ["land_2", (1, 0)],
-            "5": ["land_6", (1, 1)],
-            "6": ["land_6", (1, 2)],
-            "7": ["land_18", (1, 3)],
-            "8": ["land_2", (2, 0)],
-            "9": ["land_6", (2, 1)],
-            "10": ["land_6", (2, 2)],
-            "11": ["land_18", (2, 3)],
-            "12": ["land_3", (3, 0)],
-            "13": ["land_16", (3, 1)],
-            "14": ["land_16", (3, 2)],
-            "15": ["land_16", (3, 3)],
-            "16": ["land_11", (3, 2)]
-        }
+    def save2map_dict(self, map_dict):
+        # "land_": "land_",
         self.save2config("map", map_dict)
+
+    def save2map(self):
+        # "land_": "land_",
+        map_dict = {}
+        for i in range(16):
+            for j in range(9):
+                map_dict = self.add_map(map_dict, (i, j))
+        self.save2config("map", map_dict)
+
+    def add_map(self, dict, point, block=""):
+        block = "land_" + str(random.randint(1, 18))
+        dict[str(self.map_index)] = [block, point]
+        self.map_index += 1
+        return dict
 
     def readFromMap(self):
         return self.readFromConfig("map")
@@ -150,6 +157,7 @@ class SAVE2CONFIG:
         s2c.save2setting()
         s2c.save2tutorial()
         s2c.save2game_pause_menu()
+        s2c.save2map()
 
 
 if __name__ == '__main__':

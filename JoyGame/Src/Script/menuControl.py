@@ -20,6 +20,8 @@ class MenuControl:
         self.add2menuList("setting", self.glovar.setting_menu_config)
         self.add2menuList("tutorial", self.glovar.tutorial_menu_config)
         self.add2menuList("start", self.glovar.game_pause_menu_config)
+        self.add2menuList("create", self.glovar.game_pause_menu_config)
+        self.add2menuList("load", self.glovar.game_pause_menu_config)
 
     def add2menuList(self, layer_name, layer_config):
         self.numButton[layer_name] = len(layer_config)
@@ -131,14 +133,14 @@ class MenuControl:
             character.move_left()
         elif self.controller.LS_right:
             character.move_right()
-        elif self.controller.A and not character.physics.jump_flag:
-            character.move_jump()
-        elif self.controller.B:
+        elif self.controller.A and not character.physics.jump_flag and self.timer.elapse() > 0.5:
             character.move_sliding()
+        elif self.controller.B:
+            character.move_kicking()
         elif self.controller.X:
-            character.move_throwing()
-        elif self.controller.Y:
             character.move_slashing()
+        elif self.controller.Y:
+            character.move_throwing()
         elif self.controller.Menu and self.timer.elapse() > 0.3:
             self.pause = True
             self.timer.set_timer()
