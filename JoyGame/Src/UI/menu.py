@@ -91,7 +91,7 @@ class Menu:
                 try:
                     height = self.offset(height, span)
                     self.button.switch_bar(self.glovar.setting_menu_config[str(i)][0], self.color.Black,
-                                           (point[0], height), length, 2, 3,
+                                           (point[0], height), length, 3, 4,
                                            len(self.glovar.setting_menu_config[str(i)][index_list[int(i) - 1]]),
                                            index_list[int(i) - 1], 2)
                 except Exception as error:

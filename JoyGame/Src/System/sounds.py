@@ -61,6 +61,7 @@ class Sounds:
     def stop(self):
         pygame.mixer.music.stop()
 
+
 if __name__ == '__main__':
     sound = Sounds()
     sound.__play__()

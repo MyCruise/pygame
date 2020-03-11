@@ -7,8 +7,13 @@ import random
 
 class SAVE2CONFIG:
     def __init__(self):
+        self.max_row = 0
+        self.max_column = 0
         self.path = abspath('JoyGame/Src/Config/')
         self.map_index = 0
+        self.map_row = 0
+        self.map_column = 0
+        self.map_dict = {}
 
     def save2config(self, config_name, dict, display=False):
         sorted(dict.keys())
@@ -118,7 +123,7 @@ class SAVE2CONFIG:
         self.save2config("tutorial", tutorial_dict)
 
     def save2game_pause_menu(self):
-        # "land_": "land_",
+        # "": "",
         game_pause_menu_dict = {
             "0": ["Resume", 35, 1],
             "1": ["Setting", 35, 1],
@@ -127,20 +132,350 @@ class SAVE2CONFIG:
 
         self.save2config("game_pause_menu", game_pause_menu_dict)
 
-    def save2map_dict(self, map_dict):
-        # "land_": "land_",
-        self.save2config("map", map_dict)
+    def save2map_dict(self):
+        # "": "",
+        self.save2config("map", self.map_dict)
 
     def save2map(self):
-        # "land_": "land_",
-        map_dict = {}
+        # "": "",
         for i in range(16):
             for j in range(9):
-                map_dict = self.add_map(map_dict, (i, j))
-        self.save2config("map", map_dict)
+                self.add_map(self.map_dict, (i, j))
+        self.save2config("map", self.map_dict)
+
+    def set_map_size(self, max_column, max_row):
+        self.map_column = 0
+        self.map_row = 0
+        self.max_column = max_column
+        self.max_row = max_row
+
+    def next_block(self, block: str):
+        if self.map_column > self.max_column - 1:
+            self.map_row += 1
+            self.map_column = 0
+            print("row")
+        if self.map_row < self.max_row:
+            print("column")
+            if block != "":
+                self.add_map(self.map_dict, (self.map_column, self.map_row), block=block)
+            self.map_column += 1
+            print(self.map_column)
+
+    def save2map_2(self):
+        self.set_map_size(16, 9)
+        # 1
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        # 2
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        # 3
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        # 4
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        # 5
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        # 6
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        # 7
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        # 8
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        # 9
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.next_block("bg")
+        self.set_map_size(16, 9)
+        # 1
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        # 2
+        self.next_block("land_1")
+        self.next_block("land_2")
+        self.next_block("land_2")
+        self.next_block("land_2")
+        self.next_block("land_2")
+        self.next_block("land_3")
+        self.next_block("land_1")
+        self.next_block("land_2")
+        self.next_block("land_2")
+        self.next_block("land_2")
+        self.next_block("land_2")
+        self.next_block("land_2")
+        self.next_block("land_2")
+        self.next_block("land_2")
+        self.next_block("land_3")
+        self.next_block("")
+        # 3
+        self.next_block("land_15")
+        self.next_block("land_6")
+        self.next_block("land_6")
+        self.next_block("land_6")
+        self.next_block("land_6")
+        self.next_block("land_16")
+        self.next_block("land_15")
+        self.next_block("land_6")
+        self.next_block("land_18")
+        self.next_block("land_18")
+        self.next_block("land_18")
+        self.next_block("land_18")
+        self.next_block("land_18")
+        self.next_block("land_10")
+        self.next_block("land_11")
+        self.next_block("")
+        # 4
+        self.next_block("land_9")
+        self.next_block("land_18")
+        self.next_block("land_18")
+        self.next_block("land_18")
+        self.next_block("land_10")
+        self.next_block("land_18")
+        self.next_block("land_18")
+        self.next_block("land_11")
+        self.next_block("land_17")
+        self.next_block("land_17")
+        self.next_block("land_17")
+        self.next_block("land_17")
+        self.next_block("land_17")
+        self.next_block("land_13")
+        self.next_block("land_14")
+        self.next_block("")
+        # 5
+        self.next_block("land_12")
+        self.next_block("land_17")
+        self.next_block("land_17")
+        self.next_block("land_17")
+        self.next_block("land_13")
+        self.next_block("land_17")
+        self.next_block("land_17")
+        self.next_block("land_14")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        # 6
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        # 7
+        self.next_block("")
+        self.next_block("")
+        self.next_block("land_1")
+        self.next_block("land_2")
+        self.next_block("land_2")
+        self.next_block("land_2")
+        self.next_block("land_3")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        # 8
+        self.next_block("")
+        self.next_block("land_4")
+        self.next_block("land_5")
+        self.next_block("land_6")
+        self.next_block("land_6")
+        self.next_block("land_6")
+        self.next_block("land_7")
+        self.next_block("land_8")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        # 9
+        self.next_block("")
+        self.next_block("")
+        self.next_block("land_9")
+        self.next_block("land_18")
+        self.next_block("land_18")
+        self.next_block("land_18")
+        self.next_block("land_11")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+        self.next_block("")
+
+        self.save2config("map", self.map_dict)
 
     def add_map(self, dict, point, block=""):
-        block = "land_" + str(random.randint(1, 18))
+        if not block:
+            block = "land_" + str(random.randint(1, 18))
         dict[str(self.map_index)] = [block, point]
         self.map_index += 1
         return dict
@@ -157,7 +492,7 @@ class SAVE2CONFIG:
         s2c.save2setting()
         s2c.save2tutorial()
         s2c.save2game_pause_menu()
-        s2c.save2map()
+        s2c.save2map_2()
 
 
 if __name__ == '__main__':
