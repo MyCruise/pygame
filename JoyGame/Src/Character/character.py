@@ -90,15 +90,17 @@ class Character(pygame.sprite.Sprite):
                         json_path = os.path.join(parent, name)
                         self.sprite_dict = self.s2c.readFromSpritesConfig(json_path)
                         self.max_frame = len(self.sprite_dict["frames"])
-                    if self.sprite_dict:
-                        if suffix == ".png":
-                            png_path = os.path.join(parent, name + ".png")
-                            if self.animation != animation or self.last_animation_flip != self.animation_flip \
-                                    or self.physics.changePosition:
-                                self.frame_width = self.sprite_dict['frames'][0]['sourceSize']['w']
-                                self.frame_height = self.sprite_dict['frames'][0]['sourceSize']['h']
-                                if os.path.exists(png_path):
-                                    self.load(png_path, self.frame_width, self.frame_height, self.max_frame)
+            for filename in filenames:
+                name, suffix = os.path.splitext(filename)
+                if name == animation:
+                    if suffix == ".png":
+                        png_path = os.path.join(parent, name + ".png")
+                        if self.animation != animation or self.last_animation_flip != self.animation_flip \
+                                or self.physics.changePosition:
+                            self.frame_width = self.sprite_dict['frames'][0]['sourceSize']['w']
+                            self.frame_height = self.sprite_dict['frames'][0]['sourceSize']['h']
+                            if os.path.exists(png_path):
+                                self.load(png_path, self.frame_width, self.frame_height, self.max_frame)
         self.animation = animation
         self.last_animation_flip = self.animation_flip
 
