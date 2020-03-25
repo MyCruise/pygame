@@ -1,12 +1,10 @@
 {
-    "Effect-character": "JoyGame/Src/Assets/Effect/character/",
-    "Effect-sounds": "JoyGame/Src/Assets/Effect/sounds/",
-    "Fonts": "JoyGame/Src/Assets/Fonts/",
-    "Materials": "JoyGame/Src/Assets/Materials/",
-    "Materials-character": "JoyGame/Src/Assets/Materials/character/",
-    "Materials-environment": "JoyGame/Src/Assets/Materials/environment/",
-    "Materials-images-icon": "JoyGame/Src/Assets/Materials/image/icon/",
-    "Materials-music": "JoyGame/Src/Assets/Materials/music/",
-    "Materials-sounds": "JoyGame/Src/Assets/Materials/sounds/",
-    "music": "JoyGame/Src/Assets/music/"
+    "Effect_Sounds": "D:\\Project\\Python\\pygame_demo\\JoyGame\\Src\\Assets\\Effect\\sounds",
+    "Fonts": "D:\\Project\\Python\\pygame_demo\\JoyGame\\Src\\Assets\\Fonts",
+    "Materials": "D:\\Project\\Python\\pygame_demo\\JoyGame\\Src\\Assets\\Materials",
+    "Materials_Character": "D:\\Project\\Python\\pygame_demo\\JoyGame\\Src\\Assets\\Materials\\character",
+    "Materials_Environment": "D:\\Project\\Python\\pygame_demo\\JoyGame\\Src\\Assets\\Materials\\environment",
+    "Materials_Images_Icon": "D:\\Project\\Python\\pygame_demo\\JoyGame\\Src\\Assets\\Materials\\image\\icon",
+    "Materials_Music": "D:\\Project\\Python\\pygame_demo\\JoyGame\\Src\\Assets\\Materials\\music",
+    "Materials_Sounds": "D:\\Project\\Python\\pygame_demo\\JoyGame\\Src\\Assets\\Materials\\sounds"
 }

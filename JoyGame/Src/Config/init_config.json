@@ -1,21 +1,23 @@
 {
-    "Background_color": [
+    "Background_Color": [
         255,
         255,
         255
     ],
-    "Block_character": [
+    "Block_Character": [
         160,
         160
     ],
-    "Block_map": [
+    "Block_Map": [
         80,
         80
     ],
+    "Height": 720,
     "Mode": "noframe",
     "Resolution": [
         1280,
         720
     ],
+    "Width": 1280,
     "targetFPS": 60
 }

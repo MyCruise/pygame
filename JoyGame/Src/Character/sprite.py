@@ -1,11 +1,10 @@
 import pygame
-from JoyGame.Src.Include.glovar import GLOVAR
+from JoyGame.Src.System.global_variable import get_value
 
 
 class MySprite(pygame.sprite.Sprite):
     def __init__(self, target):
         pygame.sprite.Sprite.__init__(self)
-        self.glovar = GLOVAR()
         self.target_surface = target
         self.image = None
         self.master_image = None
@@ -23,7 +22,7 @@ class MySprite(pygame.sprite.Sprite):
 
     def load(self, filename, width, height, columns):
         self.master_image = pygame.image.load(filename).convert_alpha()
-        self.master_image = pygame.transform.scale(self.master_image, self.glovar.block_map)
+        self.master_image = pygame.transform.scale(self.master_image, get_value('Block_Map'))
         self.frame_width = width
         self.frame_height = height
         self.rect = self.position[0], self.position[1], width, height

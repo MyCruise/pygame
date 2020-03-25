@@ -1,19 +1,17 @@
 import os
+
 import pygame
 
-from JoyGame.Src.Include.abspath import abspath_join
-from JoyGame.Src.System.physics import Physics
 from JoyGame.Src.Include.vector import Vector2
-from JoyGame.Src.Include.glovar import GLOVAR
-from JoyGame.Src.System.timer import Timer
+from JoyGame.Src.System.physics import Physics
 from JoyGame.Src.Tools.save2json import SAVE2CONFIG
+from JoyGame.Src.System.global_variable import get_value
 
 
 class Character(pygame.sprite.Sprite):
     def __init__(self, target, character: str):
         pygame.sprite.Sprite.__init__(self)
         # initialize class
-        self.glovar = GLOVAR()
         self.s2c = SAVE2CONFIG()
         self.physics = Physics()
 
@@ -57,8 +55,8 @@ class Character(pygame.sprite.Sprite):
 
     def update(self, current_time):
         self.update_sprite()
-        self.physics.updatePosition()
-        if current_time > self.last_time + self.glovar.targetFPS:
+        self.physics.update_position()
+        if current_time > self.last_time + get_value('targetFPS'):
             if not self.animation_flip:
                 if self.last_animation_flip != self.animation_flip:
                     self.frame = self.first_frame
@@ -85,16 +83,16 @@ class Character(pygame.sprite.Sprite):
             self.old_frame = self.frame
 
     def loadSpriteSheet(self, animation):
-        for parent, dirnames, filenames in os.walk(abspath_join(self.glovar.MaterialsAction, self.character)):
+        for parent, dirnames, filenames in os.walk(os.path.join(get_value('Materials_Character'), self.character)):
             for filename in filenames:
                 name, suffix = os.path.splitext(filename)
                 if name == animation:
                     if suffix == ".json":
-                        json_path = abspath_join(parent, name)
+                        json_path = os.path.join(parent, name)
                         self.sprite_dict = self.s2c.readFromSpritesConfig(json_path)
                         self.max_frame = len(self.sprite_dict["frames"])
                     if suffix == ".png":
-                        png_path = abspath_join(parent, name + ".png")
+                        png_path = os.path.join(parent, name + ".png")
                         if self.animation != animation or self.last_animation_flip != self.animation_flip \
                                 or self.physics.changePosition:
                             self.frame_width = self.sprite_dict['frames'][0]['sourceSize']['w']

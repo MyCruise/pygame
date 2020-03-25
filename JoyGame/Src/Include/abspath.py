@@ -1,25 +1,38 @@
 import os
+import logging as log
 
 
 def root_abspath(prj_name):
-    path = ''
-    while os.path.split(os.path.abspath(path))[-1] != prj_name:
-        path += '../'
-        if os.path.split(os.path.abspath(path))[-1] == '':
-            print('project name error')
-            path = ''
+    root_path = os.path.abspath(os.path.basename(__file__))
+    while os.path.basename(root_path) != prj_name:
+        root_path = os.path.abspath(os.path.join(root_path, os.path.pardir))
+        if os.path.basename(root_path) == '':
+            log.error('project name error')
+            root_path = ''
             break
-    return path
+    return root_path
 
 
-def abspath_join(path, dir):
-    return path + '/' + dir
+def abspath_plus(path):
+    root = root_abspath('pygame_demo')
+    abspath = os.path.abspath(os.path.join(root, path))
+    if os.path.exists(abspath):
+        return abspath
+    else:
+        log.error("abspath: %s dose not exist" % abspath)
+        return ''
 
 
-def abspath(dst_dir=""):
-    return root_abspath('pygame_demo') + dst_dir
+def abs2rel(path: str):
+    path = list(path)
+    for index in range(len(path)):
+        if path[index] == '\\':
+            path[index] = '/'
+    for index in range(len(path)):
+        if path[index] == '\\':
+            path[index] = '/'
+    return "".join(path)
 
 
 if __name__ == '__main__':
-    path = os.path.exists(abspath('JoyGame/Src/Config'))
-    print(path)
+    print(abspath_plus(""))

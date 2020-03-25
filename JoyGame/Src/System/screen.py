@@ -1,22 +1,21 @@
 import pygame
 from pygame.locals import *
-from JoyGame.Src.Include.glovar import GLOVAR
+from JoyGame.Src.System.global_variable import get_value
 from JoyGame.Src.Include.color import Color
 
 
 class Screen:
     def __init__(self, background_color):
-        self.glovar = GLOVAR()
         self.color = Color()
         # initialize screen size variable
-        self.width = self.glovar.width
-        self.height = self.glovar.height
+        self.width = get_value('Width')
+        self.height = get_value('Height')
 
         self.resolution = (self.width, self.height)
-        self.targetFPS = self.glovar.targetFPS
+        self.targetFPS = get_value('targetFPS')
 
         self.background_color = self.color.Black
-        self.target_background_color = self.glovar.background_color
+        self.target_background_color = get_value('Background_Color')
         self.flip_flag = False
 
         # initialize variable
@@ -25,7 +24,7 @@ class Screen:
         self.breath_color_lock = False
 
         # Set display mode
-        self.screen = self.display_mode(mode=self.glovar.Mode)
+        self.screen = self.display_mode(mode=get_value('Mode'))
 
         self.background = pygame.Surface(self.resolution)
         self.background = self.background.convert()

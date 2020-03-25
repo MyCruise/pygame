@@ -1,7 +1,3 @@
-import pygame
-import math
-
-
 class Effect:
     def __init__(self):
         pass

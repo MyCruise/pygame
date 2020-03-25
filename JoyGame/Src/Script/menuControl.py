@@ -1,10 +1,9 @@
-from JoyGame.Src.Include.glovar import GLOVAR
+from JoyGame.Src.System.global_variable import get_value
 
 
 class MenuControl:
     def __init__(self, controller, timer):
         # Initialize class
-        self.glovar = GLOVAR()
         self.controller = controller
         self.timer = timer
 
@@ -15,13 +14,13 @@ class MenuControl:
         self.enter = False
         self.pause = False
         self.numButton = {}
-        self.add2menuList("homepage", self.glovar.homepage_menu_config)
-        self.add2menuList("play", self.glovar.play_menu_config)
-        self.add2menuList("setting", self.glovar.setting_menu_config)
-        self.add2menuList("tutorial", self.glovar.tutorial_menu_config)
-        self.add2menuList("start", self.glovar.game_pause_menu_config)
-        self.add2menuList("create", self.glovar.game_pause_menu_config)
-        self.add2menuList("load", self.glovar.game_pause_menu_config)
+        self.add2menuList("homepage", get_value('homepage_menu_config'))
+        self.add2menuList("play", get_value('play_menu_config'))
+        self.add2menuList("setting", get_value('setting_menu_config'))
+        self.add2menuList("tutorial", get_value('tutorial_menu_config'))
+        self.add2menuList("start", get_value('game_pause_menu_config'))
+        self.add2menuList("create", get_value('game_pause_menu_config'))
+        self.add2menuList("load", get_value('game_pause_menu_config'))
 
     def add2menuList(self, layer_name, layer_config):
         self.numButton[layer_name] = len(layer_config)

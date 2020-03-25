@@ -1,4 +1,4 @@
 {
-    "deadband1": 0.2,
-    "deadband2": 0.6
+    "Deadband1": 0.2,
+    "Deadband2": 0.6
 }

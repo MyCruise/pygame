@@ -1,49 +1,44 @@
-import os
 import sys
+
 import pygame
 from pygame.locals import *
-from sys import exit
 
-# Character
-from JoyGame.Src.Character.character import Character
-
-# Include
-from JoyGame.Src.Include.glovar import GLOVAR
-from JoyGame.Src.Include.color import Color
-
-# System
-from JoyGame.Src.System.event import next_event
-from JoyGame.Src.System.screen import Screen
-from JoyGame.Src.System.music import Music
-from JoyGame.Src.System.shape import Shape
-from JoyGame.Src.System.text import Text
-from JoyGame.Src.System.shape import Button
-from JoyGame.Src.System.timer import Timer
-from JoyGame.Src.System.picture import Picture
-from JoyGame.Src.System.sounds import Sounds
-
-# Script
-from JoyGame.Src.Script.menuControl import MenuControl
-
+# Tools
+from JoyGame.Src import SAVE2CONFIG
 # Controller
 from JoyGame.Src.Controller.controller import Controller
-
+from JoyGame.Src.Include.color import Color
+# Include
+from JoyGame.Src.Include.glovar import init_glovar
+# Script
+from JoyGame.Src.Script.menuControl import MenuControl
+# System
+from JoyGame.Src.System.event import next_event
+from JoyGame.Src.System.global_variable import get_value
+from JoyGame.Src.System.music import Music
+from JoyGame.Src.System.picture import Picture
+from JoyGame.Src.System.screen import Screen
+from JoyGame.Src.System.shape import Button
+from JoyGame.Src.System.shape import Shape
+from JoyGame.Src.System.sounds import Sounds
+from JoyGame.Src.System.text import Text
+from JoyGame.Src.System.timer import Timer
+from JoyGame.Src.UI.Game import Games
 # UI
 from JoyGame.Src.UI.menu import Menu
-from JoyGame.Src.UI.map import Map
-from JoyGame.Src.UI.Game import Games
 
 
 class Game:
     def __init__(self):
+        s2c = SAVE2CONFIG()
+        s2c.init_config()
         pygame.init()
-        self.controller = Controller()
-        self.glovar = GLOVAR()
-        self.clock = pygame.time.Clock()
-
-        self.color = Color()
+        init_glovar()
 
         # Initialize class
+        self.controller = Controller()
+        self.clock = pygame.time.Clock()
+        self.color = Color()
         self.screen = Screen(self.color.White)
         self.timer = Timer()
         self.text = Text(self.screen.screen)
@@ -56,13 +51,7 @@ class Game:
         self.menu = Menu(self.screen, self.text, self.clock, self.mc, self.games)
         self.button = Button(self.screen.screen, self.text)
 
-        self.title_en = ""
-        for letter in self.glovar.title_en_1.split(" "):
-            self.title_en += letter
-        self.title_en += " "
-        for letter in self.glovar.title_en_2.split(" "):
-            self.title_en += letter
-        pygame.display.set_caption(self.title_en)
+        pygame.display.set_caption(' '.join([get_value('Title_en_1'), get_value('Title_en_2')]))
 
         # display information
         print("platform: \t\t" + sys.platform)
@@ -132,7 +121,7 @@ class Game:
     def update(self):
         self.process_event()
         self.controller.joystick()
-        self.clock.tick(self.glovar.targetFPS)
+        self.clock.tick(get_value('targetFPS'))
         self.ticks = pygame.time.get_ticks() / 1000
         pygame.display.set_caption("Dungeon Adventure" + self.timer.num2time(self.ticks))
 
@@ -234,7 +223,11 @@ class Game:
                 image = self.picture.load_image("switchProController.png", (200, 200))
                 self.picture.addImage(image, (int(self.screen.width / 2) - 100, int(self.screen.height) - 100))
 
-        self.menu.test()
+        '''
+        Debug
+        '''
+        # self.menu.test()
+
         # pygame.display.flip()
         pygame.display.update()
 

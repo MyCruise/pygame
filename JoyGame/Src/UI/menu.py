@@ -1,11 +1,8 @@
-import pygame
-from pygame import draw, Surface
 from JoyGame.Src.Include.color import Color
-from JoyGame.Src.System.shape import Shape, Button
 from JoyGame.Src.System.effect import Effect
+from JoyGame.Src.System.global_variable import get_value
 from JoyGame.Src.System.picture import Picture
-from JoyGame.Src.UI.Game import Games
-from JoyGame.Src.Include.glovar import GLOVAR
+from JoyGame.Src.System.shape import Shape, Button
 
 
 class Menu:
@@ -14,7 +11,6 @@ class Menu:
         self.height = screen.height
 
         # Initialize class
-        self.glovar = GLOVAR()
         self.screen = screen
         self.color = Color()
         self.effect = Effect()
@@ -58,15 +54,15 @@ class Menu:
 
     def layout_homepage(self, size: tuple, start: int, span: int, index: int):
         menu_height = start - span
-        self.text.addText(self.glovar.title_en_1, "en", 90, (self.width / 2, 100), self.color.Black, None, 1)
-        self.text.addText(self.glovar.title_en_2, "en", 80, (self.width / 2, 210), self.color.Black, None, 1)
+        self.text.addText(' '.join(get_value('Title_en_1')), "en", 90, (self.width / 2, 100), self.color.Black, None, 1)
+        self.text.addText(' '.join(get_value('Title_en_2')), "en", 80, (self.width / 2, 210), self.color.Black, None, 1)
 
-        for i in range(len(self.glovar.homepage_menu_config)):
+        for i in range(len(get_value('homepage_menu_config'))):
             menu_height = self.offset(menu_height, span)
             i = str(i)
-            self.button.round_button(self.glovar.homepage_menu_config[i][0], self.glovar.homepage_menu_config[i][1],
+            self.button.round_button(get_value('homepage_menu_config')[i][0], get_value('homepage_menu_config')[i][1],
                                      self.color.Gray, (self.width / 2 - 120, menu_height), size, 10,
-                                     self.glovar.homepage_menu_config[i][2], 0)
+                                     get_value('homepage_menu_config')[i][2], 0)
         menu_height = start
         menu_height = self.offset(menu_height, index * span)
         self.button.choice_button(self.color.Gray, (self.width / 2 - 120, menu_height), (240, 60), 10, 2)
@@ -77,38 +73,39 @@ class Menu:
         self.shape.round_rect(color, point, size, int(size[0] / 10), 2)
 
     def play_menu(self, point: tuple, span: int):
-        for i in range(len(self.glovar.play_menu_config)):
-            self.play_menu_button(self.glovar.play_menu_config[str(i)][0], self.color.Gray,
+        for i in range(len(get_value('play_menu_config'))):
+            self.play_menu_button(get_value('play_menu_config')[str(i)][0], self.color.Gray,
                                   (point[0] + i * span, point[1]), (200, 200))
         menu_width = point[1] - span
         menu_width = self.offset(menu_width, self.mc.index * span)
         self.button.choice_button(self.color.Gray, (point[0] + menu_width - 20, point[1] - 20), (240, 240), 20, 2)
 
     def setting_menu(self, point: tuple, span: int, length: int, index_list: list):
-        if len(index_list) == len(self.glovar.setting_menu_config):
+        if len(index_list) == len(get_value('setting_menu_config')):
             height = point[1] - span
-            for i in self.glovar.setting_menu_config:
+            for i in get_value('setting_menu_config'):
                 try:
                     height = self.offset(height, span)
-                    self.button.switch_bar(self.glovar.setting_menu_config[str(i)][0], self.color.Black,
+                    self.button.switch_bar(get_value('setting_menu_config')[str(i)][0], self.color.Black,
                                            (point[0], height), length, 3, 4,
-                                           len(self.glovar.setting_menu_config[str(i)][index_list[int(i) - 1]]),
+                                           len(get_value('setting_menu_config')[str(i)][index_list[int(i) - 1]]),
                                            index_list[int(i) - 1], 2)
                 except Exception as error:
-                    print(len(self.glovar.setting_menu_config[i][1:]))
-                    print(self.glovar.setting_menu_config[i][1:])
+                    print(len(get_value('setting_menu_config')[i][1:]))
+                    print(get_value('setting_menu_config')[i][1:])
                     print(error)
         else:
             print("False")
 
     def game_pause_menu(self, size: tuple, start: int, span: int, index: int):
         menu_height = start - span
-        for i in range(len(self.glovar.game_pause_menu_config)):
+        for i in range(len(get_value('game_pause_menu_config'))):
             menu_height = self.offset(menu_height, span)
             i = str(i)
-            self.button.round_button(self.glovar.game_pause_menu_config[i][0], self.glovar.game_pause_menu_config[i][1],
+            self.button.round_button(get_value('game_pause_menu_config')[i][0],
+                                     get_value('game_pause_menu_config')[i][1],
                                      self.color.Gray, (self.width / 2 - 120, menu_height), size, 10,
-                                     self.glovar.game_pause_menu_config[i][2], 0)
+                                     get_value('game_pause_menu_config')[i][2], 0)
         menu_height = start
         menu_height = self.offset(menu_height, index * span)
         self.button.choice_button(self.color.Gray, (self.width / 2 - 120, menu_height), (240, 60), 10, 2)

@@ -1,7 +1,7 @@
 import os
 import json
 from JoyGame.Src.System.toJson import config_wt, config_rd
-from JoyGame.Src.Include.abspath import abspath
+from JoyGame.Src.Include.abspath import abspath_plus
 import random
 
 
@@ -9,23 +9,17 @@ class SAVE2CONFIG:
     def __init__(self):
         self.max_row = 0
         self.max_column = 0
-        self.path = abspath('JoyGame/Src/Config/')
+        self.path = abspath_plus('JoyGame/Src/Config/')
         self.map_index = 0
         self.map_row = 0
         self.map_column = 0
         self.map_dict = {}
 
     def save2config(self, config_name, dict, display=False):
-        sorted(dict.keys())
-        config_wt(self.path + config_name + "_config", dict, display)
-        config_dict = config_rd(self.path + config_name + "_config")
-        if display:
-            print(config_dict)
+        config_wt(os.path.join(self.path, config_name + "_config"), dict, display)
 
     def readFromConfig(self, config_name, display=False):
-        config_dict = config_rd(self.path + config_name + "_config", display)
-        if display:
-            print(config_dict)
+        config_dict = config_rd(os.path.join(self.path, config_name + "_config"), display)
         return config_dict
 
     def readFromSpritesConfig(self, filePath, display=False):
@@ -39,37 +33,37 @@ class SAVE2CONFIG:
         # "": "",
         init_dict = {
             "Resolution": [1280, 720],
+            'Width': 1280,
+            'Height': 720,
             "Mode": "noframe",
-            "Background_color": (255, 255, 255),
+            "Background_Color": (255, 255, 255),
             "targetFPS": 60,
-            "Block_character": (160, 160),
-            "Block_map": (80, 80)
+            "Block_Character": (160, 160),
+            "Block_Map": (80, 80)
         }
         self.save2config("init", init_dict)
 
     def save2path(self):
         # "": "",
         path_dict = {
-            "music": "JoyGame/Src/Assets/music/",
-            "Materials": "JoyGame/Src/Assets/Materials/",
-            "Effect-character": "JoyGame/Src/Assets/Effect/character/",
-            "Effect-sounds": "JoyGame/Src/Assets/Effect/sounds/",
-            "Fonts": "JoyGame/Src/Assets/Fonts/",
-            "Materials-character": "JoyGame/Src/Assets/Materials/character/",
-            "Materials-environment": "JoyGame/Src/Assets/Materials/environment/",
-            "Materials-sounds": "JoyGame/Src/Assets/Materials/sounds/",
-            "Materials-music": "JoyGame/Src/Assets/Materials/music/",
-            "Materials-images-icon": "JoyGame/Src/Assets/Materials/image/icon/"
+            "Materials": abspath_plus("JoyGame/Src/Assets/Materials/"),
+            "Effect_Sounds": abspath_plus("JoyGame/Src/Assets/Effect/sounds/"),
+            "Fonts": abspath_plus("JoyGame/Src/Assets/Fonts/"),
+            "Materials_Character": abspath_plus("JoyGame/Src/Assets/Materials/character/"),
+            "Materials_Environment": abspath_plus("JoyGame/Src/Assets/Materials/environment/"),
+            "Materials_Sounds": abspath_plus("JoyGame/Src/Assets/Materials/sounds/"),
+            "Materials_Music": abspath_plus("JoyGame/Src/Assets/Materials/music/"),
+            "Materials_Images_Icon": abspath_plus("JoyGame/Src/Assets/Materials/image/icon/")
         }
         self.save2config("path", path_dict)
 
     def save2layout(self):
         # "": "",
         title_dict = {
-            "title_en_1": "D u n g e o n",
-            "title_en_2": "A d v e n t u r e",
-            "title_cn_1": "地牢",
-            "title_cn_2": "冒险"
+            "Title_en_1": "Dungeon",
+            "Title_en_2": "Adventure",
+            "Title_cn_1": "地牢",
+            "Title_cn_2": "冒险"
         }
 
         layout_button_dict = {
@@ -85,8 +79,8 @@ class SAVE2CONFIG:
     def save2control(self):
         # "": "",
         control_dict = {
-            "deadband1": 0.2,
-            "deadband2": 0.6
+            "Deadband1": 0.2,
+            "Deadband2": 0.6
         }
 
         self.save2config("control", control_dict)
@@ -153,13 +147,13 @@ class SAVE2CONFIG:
         if self.map_column > self.max_column - 1:
             self.map_row += 1
             self.map_column = 0
-            print("row")
+            # print("row")
         if self.map_row < self.max_row:
-            print("column")
+            # print("column")
             if block != "":
                 self.add_map(self.map_dict, (self.map_column, self.map_row), block=block)
             self.map_column += 1
-            print(self.map_column)
+            # print(self.map_column)
 
     def save2map_2(self):
         self.set_map_size(16, 9)
@@ -484,15 +478,15 @@ class SAVE2CONFIG:
         return self.readFromConfig("map")
 
     def init_config(self):
-        s2c.save2player()
-        s2c.save2path()
-        s2c.save2layout()
-        s2c.save2control()
-        s2c.save2play()
-        s2c.save2setting()
-        s2c.save2tutorial()
-        s2c.save2game_pause_menu()
-        s2c.save2map_2()
+        self.save2player()
+        self.save2path()
+        self.save2layout()
+        self.save2control()
+        self.save2play()
+        self.save2setting()
+        self.save2tutorial()
+        self.save2game_pause_menu()
+        self.save2map_2()
 
 
 if __name__ == '__main__':

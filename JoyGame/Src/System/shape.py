@@ -1,6 +1,7 @@
-import pygame
 from math import radians
-from JoyGame.Src.System.text import Text
+
+import pygame
+
 from JoyGame.Src.Include.color import Color
 
 

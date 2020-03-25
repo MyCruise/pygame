@@ -1,17 +1,16 @@
 import os
 import pygame
-from JoyGame.Src.Include.abspath import abspath_join
 from JoyGame.Src.Include.color import *
-from JoyGame.Src.Include.glovar import GLOVAR
+# from JoyGame.Src.Include.glovar import GLOVAR
+from JoyGame.Src.System.global_variable import get_value
 
 
 class Text:
     def __init__(self, screen):
         self.screen = screen
-        self.glovar = GLOVAR()
-        self.language = os.listdir(self.glovar.Fonts)
-        self.fonts_chinese_path = abspath_join(self.glovar.Fonts, self.language[0])
-        self.fonts_alpha_path = abspath_join(self.glovar.Fonts, self.language[1])
+        self.language = os.listdir(get_value('Fonts'))
+        self.fonts_chinese_path = os.path.join(get_value('Fonts'), self.language[0])
+        self.fonts_alpha_path = os.path.join(get_value('Fonts'), self.language[1])
         self.fonts_chinese = os.listdir(self.fonts_chinese_path)
         self.fonts_alpha = os.listdir(self.fonts_alpha_path)
         self.maxLength_chinese = len(self.fonts_chinese)
@@ -22,12 +21,12 @@ class Text:
         if label == "cn":
             if index > self.maxLength_chinese:
                 index = self.maxLength_chinese
-            self.fontObj = pygame.font.Font(abspath_join(self.fonts_chinese_path, self.fonts_chinese[index]), size)
+            self.fontObj = pygame.font.Font(os.path.join(self.fonts_chinese_path, self.fonts_chinese[index]), size)
         # English language
         elif label == "en":
             if index > self.maxLength_alpha:
                 index = self.maxLength_alpha
-            self.fontObj = pygame.font.Font(abspath_join(self.fonts_alpha_path, self.fonts_alpha[index]), size)
+            self.fontObj = pygame.font.Font(os.path.join(self.fonts_alpha_path, self.fonts_alpha[index]), size)
         # other language
         else:
             if index > self.maxLength_alpha:
@@ -84,14 +83,3 @@ class Text:
             return True
         else:
             return False
-
-
-if __name__ == '__main__':
-    glovar = GLOVAR()
-    text = Text("screen")
-    print(os.path.exists(abspath_join(glovar.Fonts, text.language[0])))
-    print(text.fonts_alpha, text.fonts_alpha[0])
-    print(abspath_join(text.fonts_alpha_path, text.fonts_alpha[0]))
-    print(text.language)
-    # print(glovar.Fonts)
-    # print(os.listdir(glovar.Fonts))

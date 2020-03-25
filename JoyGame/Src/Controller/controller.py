@@ -1,9 +1,9 @@
-import pygame
-from pygame.locals import *
 import os
 import platform
-from JoyGame.Src.System.physics import GLOVAR
-from JoyGame.Src.Include.vector import Vector2
+
+import pygame
+
+from JoyGame.Src.System.global_variable import get_value
 
 
 class Controller:
@@ -11,9 +11,6 @@ class Controller:
         # Initialize joystick
         pygame.init()
         pygame.joystick.init()
-
-        # Initialize class
-        self.glovar = GLOVAR()
 
         # initialize variable
         self.Menu = 0
@@ -53,8 +50,8 @@ class Controller:
 
         self.mouse_position = ()
 
-        self.deadband1 = self.glovar.deadband1
-        self.deadband2 = self.glovar.deadband2
+        self.deadband1 = get_value('Deadband1')
+        self.deadband2 = get_value('Deadband2')
 
         self.keyword = pygame.key.get_pressed()
         self.btn = pygame.mouse.get_pressed()

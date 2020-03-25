@@ -1,14 +1,12 @@
 import os
 import pygame
-from JoyGame.Src.Include.glovar import GLOVAR
-from JoyGame.Src.Include.abspath import abspath_join
+from JoyGame.Src.System.global_variable import get_value
 
 
 class Sounds:
     def __init__(self):
         pygame.mixer.init()
-        self.glovar = GLOVAR()
-        self.music_path = self.glovar.MaterialsMusic
+        self.music_path = get_value('Materials_Music')
         self.index = 0
         self.music_list = os.listdir(self.music_path)
         self.maxNum = len(self.music_list) - 1
@@ -26,7 +24,7 @@ class Sounds:
             self.index = self.maxNum
 
     def __file__(self):
-        return abspath_join(self.music_path, self.music_list[self.index])
+        return os.path.join(self.music_path, self.music_list[self.index])
 
     def __play__(self):
         if not pygame.mixer.music.get_busy():

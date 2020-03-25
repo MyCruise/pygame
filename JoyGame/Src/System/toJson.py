@@ -2,7 +2,7 @@ import os
 import json
 
 
-def config_wt(file_name, config, display="False"):
+def config_wt(file_name, config, display=False):
     if os.path.exists(str(file_name) + ".json"):
         with open(str(file_name) + ".json", "w") as f:
             json.dump(config, f, sort_keys=True, indent=4, separators=(',', ': '))
@@ -12,7 +12,7 @@ def config_wt(file_name, config, display="False"):
         print("%s\nis not exists" % file_name)
 
 
-def config_rd(file_name, display="False"):
+def config_rd(file_name, display=False):
     if os.path.exists(str(file_name) + ".json"):
         with open(str(file_name) + ".json", 'r') as load_f:
             if display:
