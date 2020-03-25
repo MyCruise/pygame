@@ -1,5 +1,5 @@
-import os
 import logging as log
+import os
 
 
 def root_abspath(prj_name):

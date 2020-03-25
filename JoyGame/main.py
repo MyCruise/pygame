@@ -1,21 +1,19 @@
-import os
 import sys
 import pygame
 import logging as log
 
-sys.path.append(os.path.abspath(os.path.join(__file__, os.path.pardir)))
-
 from pygame.locals import *
 
+sys.path.append("..")
 # Include
 from JoyGame.Src.Include import init_glovar
+from JoyGame.Src import Color
 
 # Tools
 from JoyGame.Src import SAVE2CONFIG
 
 # Controller
 from JoyGame.Src import Controller
-from JoyGame.Src import Color
 
 # Script
 from JoyGame.Src import MenuControl
