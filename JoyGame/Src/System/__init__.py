@@ -4,6 +4,11 @@ from .effect import Effect
 # event
 from .event import next_event
 
+# global variable
+from .global_variable import get_value
+from .global_variable import set_value
+from .global_variable import _init
+
 # information
 from .information import showFPS
 

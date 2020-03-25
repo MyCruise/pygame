@@ -1,33 +1,40 @@
 import os
 import sys
-
 import pygame
+import logging as log
+
+sys.path.append(os.path.abspath(os.path.join(__file__, os.path.pardir)))
+
 from pygame.locals import *
 
-sys.path.append("../JoyGame")
+# Include
+from JoyGame.Src.Include import init_glovar
+
 # Tools
 from JoyGame.Src import SAVE2CONFIG
+
 # Controller
-from JoyGame.Src.Controller.controller import Controller
-from JoyGame.Src.Include.color import Color
-# Include
-from JoyGame.Src.Include.glovar import init_glovar
+from JoyGame.Src import Controller
+from JoyGame.Src import Color
+
 # Script
-from JoyGame.Src.Script.menuControl import MenuControl
+from JoyGame.Src import MenuControl
+
 # System
-from JoyGame.Src.System.event import next_event
-from JoyGame.Src.System.global_variable import get_value
-from JoyGame.Src.System.music import Music
-from JoyGame.Src.System.picture import Picture
-from JoyGame.Src.System.screen import Screen
-from JoyGame.Src.System.shape import Button
-from JoyGame.Src.System.shape import Shape
-from JoyGame.Src.System.sounds import Sounds
-from JoyGame.Src.System.text import Text
-from JoyGame.Src.System.timer import Timer
-from JoyGame.Src.UI.Game import Games
+from JoyGame.Src import next_event
+from JoyGame.Src import get_value
+from JoyGame.Src import Music
+from JoyGame.Src import Picture
+from JoyGame.Src import Screen
+from JoyGame.Src import Shape
+from JoyGame.Src import Sounds
+from JoyGame.Src import Text
+from JoyGame.Src import Timer
+
 # UI
-from JoyGame.Src.UI.menu import Menu
+from JoyGame.Src import Button
+from JoyGame.Src import Menu
+from JoyGame.Src import Games
 
 
 class Game:
@@ -35,7 +42,8 @@ class Game:
         s2c = SAVE2CONFIG()
         s2c.init_config()
         pygame.init()
-        init_glovar()
+        if not init_glovar():
+            log.error('global variable initialize failure')
 
         # Initialize class
         self.controller = Controller()

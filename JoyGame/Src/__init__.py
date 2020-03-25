@@ -15,7 +15,7 @@ from .Include import Vector2
 from .Include import Vector3
 
 # Script
-from .Script import menuControl
+from .Script import MenuControl
 
 # Tools
 from .Tools import SAVE2CONFIG
@@ -32,3 +32,13 @@ from .System import Text
 from .System import Timer
 from .System import config_rd
 from .System import config_wt
+from .System import get_value
+from .System import set_value
+from .System import _init
+from .System import Picture
+from .System import Sounds
+
+# Menu
+from .UI import Menu
+from .UI import Games
+from .UI import Button

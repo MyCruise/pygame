@@ -10,6 +10,8 @@ from .color import Color
 
 # glover
 from .glovar import init_glovar
+from .glovar import init_variable
+from .glovar import get_value_from_config
 
 # variable
 

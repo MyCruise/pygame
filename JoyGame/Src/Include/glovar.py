@@ -1,19 +1,22 @@
+import logging as log
+
 from JoyGame.Src.Tools.save2json import SAVE2CONFIG
 from JoyGame.Src.System.global_variable import _init
 from JoyGame.Src.System.global_variable import set_value
 
-s2c = SAVE2CONFIG()
-
 
 def init_glovar():
     # initialize global variable
-    _init()
-    if init_variable():
-        set_value('init_glovar_flag', True)
-        return True
+    if _init():
+        if init_variable():
+            set_value('init_glovar_flag', True)
+            return True
+        else:
+            set_value('init_glovar_flag', False)
+            log.error('initialize global variable failure')
+            return False
     else:
-        set_value('init_glovar_flag', False)
-        return False
+        log.error('initialize global dictionary failure')
 
 
 def get_value_from_config(config: dict):
@@ -22,6 +25,7 @@ def get_value_from_config(config: dict):
 
 
 def init_variable():
+    s2c = SAVE2CONFIG()
     # Ignore file
     set_value('ignore_name', ['.gitignore', '.DS_Store'])
     set_value('ignore_suffix', [])
@@ -53,4 +57,4 @@ def init_variable():
 
 
 if __name__ == '__main__':
-    pass
+    init_glovar()
