@@ -42,7 +42,6 @@ class Character(pygame.sprite.Sprite):
         self.last_frame = 0
         self.columns = 1
         self.last_time = 0
-        self.loadSpriteSheet("Running")
 
     def load(self, filename, width, height, columns):
         self.master_image = pygame.image.load(filename).convert_alpha()
@@ -91,14 +90,15 @@ class Character(pygame.sprite.Sprite):
                         json_path = os.path.join(parent, name)
                         self.sprite_dict = self.s2c.readFromSpritesConfig(json_path)
                         self.max_frame = len(self.sprite_dict["frames"])
-                    if suffix == ".png":
-                        png_path = os.path.join(parent, name + ".png")
-                        if self.animation != animation or self.last_animation_flip != self.animation_flip \
-                                or self.physics.changePosition:
-                            self.frame_width = self.sprite_dict['frames'][0]['sourceSize']['w']
-                            self.frame_height = self.sprite_dict['frames'][0]['sourceSize']['h']
-                            if os.path.exists(png_path):
-                                self.load(png_path, self.frame_width, self.frame_height, self.max_frame)
+                    if self.sprite_dict:
+                        if suffix == ".png":
+                            png_path = os.path.join(parent, name + ".png")
+                            if self.animation != animation or self.last_animation_flip != self.animation_flip \
+                                    or self.physics.changePosition:
+                                self.frame_width = self.sprite_dict['frames'][0]['sourceSize']['w']
+                                self.frame_height = self.sprite_dict['frames'][0]['sourceSize']['h']
+                                if os.path.exists(png_path):
+                                    self.load(png_path, self.frame_width, self.frame_height, self.max_frame)
         self.animation = animation
         self.last_animation_flip = self.animation_flip
 
