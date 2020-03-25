@@ -1,8 +1,10 @@
+import os
 import sys
 
 import pygame
 from pygame.locals import *
 
+sys.path.append("../JoyGame")
 # Tools
 from JoyGame.Src import SAVE2CONFIG
 # Controller
