@@ -14,7 +14,7 @@ def root_abspath(prj_name):
 
 
 def abspath_plus(path):
-    root = root_abspath('pygame_demo')
+    root = root_abspath('JoyGame')
     abspath = os.path.abspath(os.path.join(root, path))
     if os.path.exists(abspath):
         return abspath
@@ -35,4 +35,4 @@ def abs2rel(path: str):
 
 
 if __name__ == '__main__':
-    print(abspath_plus(""))
+    print(abspath_plus("Src/Assets/Materials/"))

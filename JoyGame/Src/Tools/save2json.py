@@ -9,7 +9,7 @@ class SAVE2CONFIG:
     def __init__(self):
         self.max_row = 0
         self.max_column = 0
-        self.path = abspath_plus('JoyGame/Src/Config/')
+        self.path = abspath_plus('Src/Config/')
         self.map_index = 0
         self.map_row = 0
         self.map_column = 0
@@ -46,14 +46,14 @@ class SAVE2CONFIG:
     def save2path(self):
         # "": "",
         path_dict = {
-            "Materials": abspath_plus("JoyGame/Src/Assets/Materials/"),
-            "Effect_Sounds": abspath_plus("JoyGame/Src/Assets/Effect/sounds/"),
-            "Fonts": abspath_plus("JoyGame/Src/Assets/Fonts/"),
-            "Materials_Character": abspath_plus("JoyGame/Src/Assets/Materials/character/"),
-            "Materials_Environment": abspath_plus("JoyGame/Src/Assets/Materials/environment/"),
-            "Materials_Sounds": abspath_plus("JoyGame/Src/Assets/Materials/sounds/"),
-            "Materials_Music": abspath_plus("JoyGame/Src/Assets/Materials/music/"),
-            "Materials_Images_Icon": abspath_plus("JoyGame/Src/Assets/Materials/image/icon/")
+            "Materials": abspath_plus("Src/Assets/Materials/"),
+            "Effect_Sounds": abspath_plus("Src/Assets/Effect/sounds/"),
+            "Fonts": abspath_plus("Src/Assets/Fonts/"),
+            "Materials_Character": abspath_plus("Src/Assets/Materials/character/"),
+            "Materials_Environment": abspath_plus("Src/Assets/Materials/environment/"),
+            "Materials_Sounds": abspath_plus("Src/Assets/Materials/sounds/"),
+            "Materials_Music": abspath_plus("Src/Assets/Materials/music/"),
+            "Materials_Images_Icon": abspath_plus("Src/Assets/Materials/image/icon/")
         }
         self.save2config("path", path_dict)
 
