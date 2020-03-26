@@ -128,7 +128,8 @@ class Game:
 
     def update(self):
         self.process_event()
-        self.controller.detect_joysticks()
+        if self.controller.detect_joysticks():
+            self.controller.joystick()
         self.clock.tick(get_value('targetFPS'))
         self.ticks = pygame.time.get_ticks() / 1000
         pygame.display.set_caption("Dungeon Adventure" + self.timer.num2time(self.ticks))
