@@ -1,5 +1,6 @@
 import os
 import pygame
+import logging as log
 from JoyGame.Src.System.global_variable import get_value
 
 
@@ -7,6 +8,8 @@ class Sounds:
     def __init__(self):
         pygame.mixer.init()
         self.music_path = get_value('Materials_Music')
+        if not os.path.exists(self.music_path):
+            log.error("%s does not exists" % self.music_path)
         self.index = 0
         self.music_list = os.listdir(self.music_path)
         self.maxNum = len(self.music_list) - 1
