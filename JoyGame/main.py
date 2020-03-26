@@ -109,18 +109,17 @@ class Game:
             if event.type == MOUSEMOTION:
                 self.controller.mouse_position = pygame.mouse.get_pos()
 
-            if self.controller.detect_joysticks():
-                if event.type == self.CONTROLLER:
-                    # Menu control by controller
+            if event.type == self.MAINLOOP:
+                pass
+
+            if event.type == self.CONTROLLER:
+                # Menu control by controller
+                if self.controller.controller:
                     if self.lock_control and self.mc.layer in [1]:
                         self.mc.horizontal_control()
 
                     elif self.lock_control and self.mc.layer in [2]:
                         self.mc.vertical_control()
-
-                    # Game control
-                if event.type == self.MAINLOOP:
-                    pass
 
                 # Joystick button pressed
                 if event.type == pygame.JOYBUTTONDOWN:

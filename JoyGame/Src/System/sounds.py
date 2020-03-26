@@ -35,7 +35,7 @@ class Sounds:
                 pygame.mixer.music.load(self.__file__())
                 pygame.mixer.music.play(1, 0)
             else:
-                print("error")
+                log.error("% does not exists", self.__file__())
         else:
             pass
 
