@@ -42,6 +42,7 @@ class Character(pygame.sprite.Sprite):
         self.last_frame = 0
         self.columns = 1
         self.last_time = 0
+        self.loadSpriteSheet("Idle")
 
     def load(self, filename, width, height, columns):
         self.master_image = pygame.image.load(filename).convert_alpha()
