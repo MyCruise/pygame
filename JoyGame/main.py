@@ -93,8 +93,7 @@ class Game:
                     self.mc.rear()
                     self.timer.set_timer()
                 elif event.key == K_r and self.timer.elapse() > 0.1:
-                    pygame.joystick.quit()
-                    pygame.joystick.init()
+                    self.controller.init_control()
                 elif event.key == K_KP_ENTER and self.timer.elapse() > 0.1:
                     self.mc.enter_menu()
                     self.timer.set_timer()
@@ -185,6 +184,9 @@ class Game:
                     self.mc.layer_name = "homepage"
                     self.mc.index = 0
                     self.mc.enter = False
+        if self.controller.controller != self.controller.last_controller:
+            if self.controller.controller:
+                self.controller.init_control()
 
     def display(self):
         # Loading music
@@ -230,8 +232,9 @@ class Game:
                 self.menu.game()
             if self.mc.layer_name == "load":
                 self.menu.game()
-        # if self.controller.controller != self.controller.last_controller:
-        #     if self.controller.controller:
+        if self.controller.controller != self.controller.last_controller:
+            if self.controller.controller:
+                pass
         #         image = self.picture.load_image("switchProController.png", (200, 200))
         #         self.picture.addImage(image, (int(self.screen.width / 2) - 100, int(self.screen.height) - 100))
 

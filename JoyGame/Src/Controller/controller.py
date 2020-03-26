@@ -162,7 +162,6 @@ class Controller:
         # Windows system platform
         if self.sysstr == "Windows":
             self.controller = True
-            return self.controller
 
         # Linux system platform
         elif self.sysstr == "Linux":
@@ -180,11 +179,11 @@ class Controller:
             else:
                 pass
             self.last_controller = self.controller
-            return self.controller
 
         # Other system platform
         else:
             print("Other System tasks")
+        return self.controller
 
 
 if __name__ == '__main__':
