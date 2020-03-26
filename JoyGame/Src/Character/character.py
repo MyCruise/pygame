@@ -136,8 +136,6 @@ class Character(pygame.sprite.Sprite):
                 self.loadSpriteSheet("Jump Loop")
             elif self.status == "Sliding":
                 self.loadSpriteSheet("Sliding")
-            elif self.status == "Kicking":
-                self.loadSpriteSheet("Kicking")
             elif self.status == "Running":
                 self.loadSpriteSheet("Running")
 

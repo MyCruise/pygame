@@ -45,8 +45,8 @@ class Controller:
 
         self.sysstr = platform.system()
 
-        self.controller = 0
-        self.last_controller = 0
+        self.controller = False
+        self.last_controller = False
 
         self.mouse_position = ()
 
@@ -73,7 +73,7 @@ class Controller:
             joystick = pygame.joystick.Joystick(i)
             joystick.init()
 
-            self.name = joystick.get_name()
+            # self.name = joystick.get_name()
 
             # axes = joystick.get_numaxes()
             # self.LS = [joystick.get_axis(0), joystick.get_axis(1)]
@@ -161,18 +161,18 @@ class Controller:
     def detect_joysticks(self):
         # Windows system platform
         if self.sysstr == "Windows":
-            self.controller = 1
+            self.controller = True
             return self.controller
 
         # Linux system platform
         elif self.sysstr == "Linux":
             if os.path.exists("/dev/input/js0"):
-                self.controller = 1
+                self.controller = True
             else:
-                self.controller = 0
+                self.controller = False
 
             if self.controller != self.last_controller:
-                if self.controller == 1:
+                if self.controller:
                     self.init_control()
                     print("controller connected")
                 else:

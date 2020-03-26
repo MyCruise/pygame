@@ -128,7 +128,6 @@ class Game:
 
     def update(self):
         self.process_event()
-        self.controller.joystick()
         self.clock.tick(get_value('targetFPS'))
         self.ticks = pygame.time.get_ticks() / 1000
         pygame.display.set_caption("Dungeon Adventure" + self.timer.num2time(self.ticks))
@@ -226,10 +225,10 @@ class Game:
                 self.menu.game()
             if self.mc.layer_name == "load":
                 self.menu.game()
-        if self.controller.controller and self.controller.last_controller:
-            if self.controller.controller:
-                image = self.picture.load_image("switchProController.png", (200, 200))
-                self.picture.addImage(image, (int(self.screen.width / 2) - 100, int(self.screen.height) - 100))
+        # if self.controller.controller != self.controller.last_controller:
+        #     if self.controller.controller:
+        #         image = self.picture.load_image("switchProController.png", (200, 200))
+        #         self.picture.addImage(image, (int(self.screen.width / 2) - 100, int(self.screen.height) - 100))
 
         '''
         Debug
@@ -241,7 +240,7 @@ class Game:
 
     def main(self):
         while self.running:
-            if self.controller.detect_joysticks:
+            if self.controller.detect_joysticks():
                 self.controller.joystick()
             self.update()
             self.display()
