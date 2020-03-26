@@ -86,16 +86,16 @@ class Game:
                 self.mc.key_button_pressed = 1
                 if event.key == K_ESCAPE:
                     self.running = False
-                if event.key == K_w and self.timer.elapse() > 0.1:
+                if event.key == K_w and self.timer.elapse() > 0.1 and self.lock_control:
                     self.mc.front()
                     self.timer.set_timer()
-                elif event.key == K_s and self.timer.elapse() > 0.1:
+                elif event.key == K_s and self.timer.elapse() > 0.1 and self.lock_control:
                     self.mc.rear()
                     self.timer.set_timer()
-                elif event.key == K_r and self.timer.elapse() > 0.1:
+                elif event.key == K_r and self.timer.elapse() > 0.1 and self.lock_control:
                     pygame.joystick.quit()
                     pygame.joystick.init()
-                elif event.key == K_KP_ENTER and self.timer.elapse() > 0.1:
+                elif event.key == K_KP_ENTER and self.timer.elapse() > 0.1 and self.lock_control:
                     self.mc.enter_menu()
                     self.timer.set_timer()
             if event.type == KEYUP:
@@ -133,6 +133,9 @@ class Game:
         self.process_event()
         if self.controller.detect_joysticks():
             self.controller.joystick()
+        if self.controller.controller != self.controller.last_controller:
+            pygame.joystick.quit()
+            pygame.joystick.init()
         self.clock.tick(get_value('targetFPS'))
         self.ticks = pygame.time.get_ticks() / 1000
         pygame.display.set_caption("Dungeon Adventure" + self.timer.num2time(self.ticks))
