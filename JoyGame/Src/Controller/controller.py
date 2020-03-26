@@ -4,6 +4,7 @@ import platform
 import pygame
 
 from JoyGame.Src.System.global_variable import get_value
+from JoyGame.Src.System.timer import Timer
 
 
 class Controller:
@@ -11,6 +12,8 @@ class Controller:
         # Initialize joystick
         pygame.init()
         pygame.joystick.init()
+
+        self.timer = Timer()
 
         # initialize variable
         self.Menu = 0
@@ -57,6 +60,7 @@ class Controller:
         self.btn = pygame.mouse.get_pressed()
         self.joystick_button_pressed = 0
         self.key_button_pressed = 0
+        self.init_flag = False
 
         # initialize list
         self.name = []
@@ -167,14 +171,17 @@ class Controller:
                 self.controller = False
 
             if self.controller != self.last_controller:
-                pygame.joystick.quit()
-                pygame.joystick.init()
+                self.init_flag = True
+                self.timer.set_timer()
                 if self.controller:
                     print("controller connected")
                 else:
                     print("controller disconnected")
             else:
                 pass
+            if self.init_flag and self.timer.elapse() < 0.3:
+                pygame.joystick.quit()
+                pygame.joystick.init()
             self.last_controller = self.controller
 
         # Other system platform

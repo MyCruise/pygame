@@ -133,9 +133,6 @@ class Game:
         self.process_event()
         if self.controller.detect_joysticks():
             self.controller.joystick()
-        if self.controller.controller != self.controller.last_controller:
-            pygame.joystick.quit()
-            pygame.joystick.init()
         self.clock.tick(get_value('targetFPS'))
         self.ticks = pygame.time.get_ticks() / 1000
         pygame.display.set_caption("Dungeon Adventure" + self.timer.num2time(self.ticks))
