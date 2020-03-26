@@ -92,6 +92,9 @@ class Game:
                 elif event.key == K_s and self.timer.elapse() > 0.1:
                     self.mc.rear()
                     self.timer.set_timer()
+                elif event.key == K_r and self.timer.elapse() > 0.1:
+                    pygame.joystick.quit()
+                    pygame.joystick.init()
                 elif event.key == K_KP_ENTER and self.timer.elapse() > 0.1:
                     self.mc.enter_menu()
                     self.timer.set_timer()
