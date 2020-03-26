@@ -172,11 +172,10 @@ class Controller:
                 self.controller = False
 
             if self.controller != self.last_controller:
+                self.init_control()
                 if self.controller:
-                    self.init_control()
                     print("controller connected")
                 else:
-                    self.init_control()
                     print("controller disconnected")
             else:
                 pass
