@@ -232,9 +232,8 @@ class Game:
                 self.menu.game()
         if self.controller.controller != self.controller.last_controller:
             if self.controller.controller:
-                pass
-        #         image = self.picture.load_image("switchProController.png", (200, 200))
-        #         self.picture.addImage(image, (int(self.screen.width / 2) - 100, int(self.screen.height) - 100))
+                image = self.picture.load_image("switchProController.png", (200, 200))
+                self.picture.addImage(image, (int(self.screen.width / 2) - 100, int(self.screen.height) - 100))
 
         '''
         Debug

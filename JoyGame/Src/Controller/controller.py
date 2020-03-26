@@ -162,6 +162,7 @@ class Controller:
         # Windows system platform
         if self.sysstr == "Windows":
             self.controller = True
+            self.last_controller = True
 
         # Linux system platform
         elif self.sysstr == "Linux":
