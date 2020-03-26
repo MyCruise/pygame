@@ -114,7 +114,7 @@ class Game:
 
             if event.type == self.CONTROLLER:
                 # Menu control by controller
-                if self.controller.controller:
+                if self.controller.detect_joysticks():
                     if self.lock_control and self.mc.layer in [1]:
                         self.mc.horizontal_control()
 
@@ -122,12 +122,12 @@ class Game:
                         self.mc.vertical_control()
 
                 # Joystick button pressed
-                if event.type == pygame.JOYBUTTONDOWN:
-                    self.controller.joystick_button_pressed = 1
+            if event.type == pygame.JOYBUTTONDOWN:
+                self.controller.joystick_button_pressed = 1
 
-                # Joystick button released
-                elif event.type == pygame.JOYBUTTONUP:
-                    self.controller.joystick_button_pressed = 0
+            # Joystick button released
+            elif event.type == pygame.JOYBUTTONUP:
+                self.controller.joystick_button_pressed = 0
 
     def update(self):
         self.process_event()
