@@ -93,7 +93,8 @@ class Game:
                     self.mc.rear()
                     self.timer.set_timer()
                 elif event.key == K_r and self.timer.elapse() > 0.1:
-                    self.controller.init_control()
+                    pygame.joystick.quit()
+                    pygame.joystick.init()
                 elif event.key == K_KP_ENTER and self.timer.elapse() > 0.1:
                     self.mc.enter_menu()
                     self.timer.set_timer()
@@ -108,25 +109,26 @@ class Game:
             if event.type == MOUSEMOTION:
                 self.controller.mouse_position = pygame.mouse.get_pos()
 
-            if event.type == self.CONTROLLER:
-                # Menu control by controller
-                if self.lock_control and self.mc.layer in [1]:
-                    self.mc.horizontal_control()
+            if self.controller.detect_joysticks():
+                if event.type == self.CONTROLLER:
+                    # Menu control by controller
+                    if self.lock_control and self.mc.layer in [1]:
+                        self.mc.horizontal_control()
 
-                elif self.lock_control and self.mc.layer in [2]:
-                    self.mc.vertical_control()
+                    elif self.lock_control and self.mc.layer in [2]:
+                        self.mc.vertical_control()
 
-                # Game control
-            if event.type == self.MAINLOOP:
-                pass
+                    # Game control
+                if event.type == self.MAINLOOP:
+                    pass
 
-            # Joystick button pressed
-            if event.type == pygame.JOYBUTTONDOWN:
-                self.controller.joystick_button_pressed = 1
+                # Joystick button pressed
+                if event.type == pygame.JOYBUTTONDOWN:
+                    self.controller.joystick_button_pressed = 1
 
-            # Joystick button released
-            elif event.type == pygame.JOYBUTTONUP:
-                self.controller.joystick_button_pressed = 0
+                # Joystick button released
+                elif event.type == pygame.JOYBUTTONUP:
+                    self.controller.joystick_button_pressed = 0
 
     def update(self):
         self.process_event()
@@ -184,9 +186,6 @@ class Game:
                     self.mc.layer_name = "homepage"
                     self.mc.index = 0
                     self.mc.enter = False
-        if self.controller.controller != self.controller.last_controller:
-            if self.controller.controller:
-                self.controller.init_control()
 
     def display(self):
         # Loading music

@@ -154,10 +154,6 @@ class Controller:
             self.hats_down = int(self.hat[1] == -1)
             self.hats_left = int(self.hat[0] == 1)
 
-    def init_control(self):
-        pygame.joystick.quit()
-        pygame.joystick.init()
-
     def detect_joysticks(self):
         # Windows system platform
         if self.sysstr == "Windows":
@@ -171,7 +167,8 @@ class Controller:
                 self.controller = False
 
             if self.controller != self.last_controller:
-                self.init_control()
+                pygame.joystick.quit()
+                pygame.joystick.init()
                 if self.controller:
                     print("controller connected")
                 else:
