@@ -35,7 +35,7 @@ class SAVE2CONFIG:
             "Resolution": [1280, 720],
             'Width': 1280,
             'Height': 720,
-            "Mode": "noframe",
+            "Mode": "fullscreen",
             "Background_Color": (255, 255, 255),
             "targetFPS": 60,
             "Block_Character": (160, 160),
