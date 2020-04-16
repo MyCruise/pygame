@@ -9,8 +9,8 @@ class Text:
     def __init__(self, screen):
         self.screen = screen
         self.language = os.listdir(get_value('Fonts'))
-        self.fonts_chinese_path = os.path.join(get_value('Fonts'), self.language[0])
-        self.fonts_alpha_path = os.path.join(get_value('Fonts'), self.language[1])
+        self.fonts_chinese_path = os.path.join(get_value('Fonts'), 'chinese')
+        self.fonts_alpha_path = os.path.join(get_value('Fonts'), 'english')
         self.fonts_chinese = os.listdir(self.fonts_chinese_path)
         self.fonts_alpha = os.listdir(self.fonts_alpha_path)
         self.maxLength_chinese = len(self.fonts_chinese)
